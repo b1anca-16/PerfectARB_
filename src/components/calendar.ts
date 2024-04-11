@@ -2,13 +2,13 @@ import { LitElement, css, html, unsafeCSS} from "lit";
 import { map } from 'lit/directives/map.js';
 import { customElement, query, state } from "lit/decorators.js";
 
-import style from "/calendar.css"
+import style from "./calendar.css"
 
 
 @customElement("calendar-element")
 export class CalendarElement extends LitElement {
     //static styles = style;
-    //static styles = unsafeCSS(styles);
+    static styles = unsafeCSS(style);
     //static styles = css`${unsafeCSS(styles)}`;
   @state() date = new Date();
   @state() month = this.date.getMonth();
