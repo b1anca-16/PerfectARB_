@@ -1,0 +1,72 @@
+h1 {
+    font-size: large;
+  }
+  
+  .today {
+    padding-right: 10px;
+    color: white;
+    text-align: right;
+    background-color: blue;
+    width: 26px;
+    height: 26px;
+  }
+  
+  .normal-day {
+    padding-right: 10px;
+    text-align: right;
+  }
+  
+  .feld {
+    border-style: dashed, 300px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .feld:hover {
+    background-color: rgb(212 212 212);
+  }
+  
+  .weekdays {
+    border-style: dashed, 300px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .kalender {
+    width: 91.67%;
+    height: 33.33%;
+    border-width: 2px;
+    border-color: #CBD5E0;
+    background-color: #F7FAFC;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    height: 66.67%;
+    max-width: 80rem;
+    grid-template-rows: 32px auto;
+  }
+  
+  .arrow {
+    margin-bottom: 20px;
+    margin-left: 8px;
+    margin-right: 8px;
+    font-size: 26px;
+    line-height: 28px;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+  .heute {
+    margin-bottom: 20px;
+    margin-right: 40px;
+    padding: 5px 22px;
+    font-size: 18px;
+    line-height: 28px;
+    text-align: center;
+    background-color: rgb(245 245 245);
+    border-radius: 5px;
+    border-style: solid;
+    border-width: medium; 
+  }
+  .heute:hover {
+    background-color: rgb(212 212 212);
+  }
