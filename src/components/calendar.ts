@@ -1,14 +1,16 @@
 import { LitElement, css, html, unsafeCSS} from "lit";
 import { map } from 'lit/directives/map.js';
 import { customElement, query, state } from "lit/decorators.js";
+import { TailwindElement } from "../shared/tailwind.element";
 
-import style from "./calendar.css"
-
+//import style from "./calendar.css?inline";
+import style from './calendar.component.scss?inline'; 
+//import * as stylesCalendar from "./calendar.css";
 
 @customElement("calendar-element")
-export class CalendarElement extends LitElement {
+export class CalendarElement extends TailwindElement(style) {
     //static styles = style;
-    static styles = unsafeCSS(style);
+    //static styles = unsafeCSS(styles);
     //static styles = css`${unsafeCSS(styles)}`;
   @state() date = new Date();
   @state() month = this.date.getMonth();
@@ -52,7 +54,7 @@ export class CalendarElement extends LitElement {
 
   render() {
     return html`
-      <h1 class="m-10 text-2xl font-semibold">Kalender</h1>
+      <h1 class="bg-orange-600">Kalender</h1>
       <div class="flex justify-center">
         <div class="w-full flex">
           <div class="w-1/2 flex justify-end items-center">

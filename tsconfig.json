@@ -13,6 +13,7 @@
     "resolveJsonModule": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
 }
