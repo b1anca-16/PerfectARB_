@@ -81,7 +81,7 @@ export class CalendarElement extends TailwindElement(style) {
                   this.clickDate(index, currentDate);
                 }
                }} class="feld">
-               <button @click=${() => {this.addTask(currentDate, index)}} class="addButton">+</button>
+               <button @click=${() => {this.addTask(currentDate, index)}} class="addButton btn">+</button>
                <div class=${currentDate instanceof Date ? (this.isCurrentDate(currentDate) ? 'today' : 'normal-day') : 'invalid-date'}>
                ${currentDate?.getDate()}
              </div>
