@@ -4,11 +4,14 @@ import "./components/calendar";
 import "./components/display";
 import { TailwindElement } from "./shared/tailwind.element";
 import style from "./index.css?inline";
-//import style from './index.scss'; 
 
 @customElement("start-element")
 export class StartElement extends TailwindElement(style) {
   @state () clickedDate: Date;
+  @state () clickedDateString : String;
+  @query ('#modal') modal: HTMLDialogElement;
+  @query ('#task') inputTask: HTMLInputElement;
+  @state () newTask: String;
   private handleClickDate(e: CustomEvent) {
     this.clickedDate = e.detail.date;
   }
@@ -17,33 +20,35 @@ export class StartElement extends TailwindElement(style) {
   }
 
   private openAddModal(e:CustomEvent) {
-    const modal = this.shadowRoot?.getElementById("modal") as HTMLDialogElement;
-    const modalCheckbox = this.shadowRoot?.getElementById("modal") as HTMLInputElement;
-    modalCheckbox.checked = true;
+    this.modal.showModal();
     let date = e.detail.date;
-    console.log(date);
+    this.clickedDateString = date.toLocaleString('de-de', { day: 'numeric', month: 'long' });
   }
 
   private closeAddModal(e:CustomEvent) {
-    const modalCheckbox = this.shadowRoot?.getElementById("modal") as HTMLInputElement;
-    modalCheckbox.checked = false;
+    this.modal.close();
+    this.newTask = this.inputTask.value;
+    console.log(this.newTask);
   }
 
   render() {
     return html`
       <calendar-element @clickedDate=${this.handleClickDate} @addTask=${this.openAddModal} message="test"></calendar-element>
       <display-element day=${this.clickedDate}></display-element>
-      <input type="checkbox" id="modal" class="modal-toggle" />
-      <div class="modal" role="dialog">
+      
+      <dialog id="modal" class="modal">
         <div class="modal-box">
-        <h3 class="font-bold text-lg">Hello!</h3>
-        <p class="py-4">This modal works with a hidden checkbox!</p>
-      <div class="modal-action">
-      <label for="modal" class="btn">Close!</label>
-    </div>
-  </div>
-</div>
+        <h3 class="font-bold text-lg">Was habe ich am ${this.clickedDateString} ich gemacht?</h3>
+        <label for="task">Tätigkeit:</label>
+        <input type="text" id="task" name="task"><br>
+        <form method="dialog" class="modal-backdrop">
+        <button @click=${this.closeAddModal} class="btn">Close</button>
+        </form>
+      </div>
+    
+</dialog>
 
     `;
   }
 } 
+

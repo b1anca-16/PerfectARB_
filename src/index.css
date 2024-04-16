@@ -1,3 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 h1 {
   font-size: large;
+}
+
+#task {
+  border-style: solid;
+  border-width: 3px;
 }
