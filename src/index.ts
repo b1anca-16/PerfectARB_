@@ -4,6 +4,7 @@ import "./components/calendar";
 import "./components/display";
 import { TailwindElement } from "./shared/tailwind.element";
 import style from "./index.css?inline";
+import "./components/addModal";
 
 @customElement("start-element")
 export class StartElement extends TailwindElement(style) {
@@ -26,4 +27,4 @@ export class StartElement extends TailwindElement(style) {
       <display-element day=${this.clickedDate}></display-element>
     `;
   }
-}
+} 

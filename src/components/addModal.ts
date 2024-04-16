@@ -4,34 +4,44 @@ import { customElement, query, state, property } from "lit/decorators.js";
 import { TailwindElement } from "../shared/tailwind.element";
 import style from './display.component.scss?inline'; 
 
-@customElement("addModal-element")
-export class AddModalElement extends TailwindElement(style) {
- 
+class AddModal extends LitElement {
+  private modalVisible = false;
 
-  @property({ type: Boolean }) isOpen = false;
+  updated(changedProperties: Map<string | number | symbol, unknown>) {
+    super.updated(changedProperties);
+    if (changedProperties.has('modalVisible')) {
+      this.toggleModal();
+    }
+  }
 
-  constructor() {
-    super();
+  private toggleModal() {
+    const modal = this.shadowRoot?.querySelector('.modal') as HTMLElement;
+    if (this.modalVisible) {
+      modal.style.display = 'block';
+    } else {
+      modal.style.display = 'none';
+    }
+  }
+
+  openAddModal() {
+    this.modalVisible = true;
+  }
+
+  private closeModal() {
+    this.modalVisible = false;
   }
 
   render() {
-    if (!this.isOpen) return null;
-
     return html`
-      <div class="modal-overlay" @click=${this.closeModal}>
+      <button @click="${this.openAddModal}">Open Modal</button>
+      <div class="modal">
         <div class="modal-content">
+          <span class="close" @click="${this.closeModal}">&times;</span>
           <slot></slot>
         </div>
       </div>
     `;
   }
-
-  open() {
-    this.isOpen = true;
-  }
-
-  closeModal() {
-    this.isOpen = false;
-  }
-
 }
+
+customElements.define('add-modal', AddModal);

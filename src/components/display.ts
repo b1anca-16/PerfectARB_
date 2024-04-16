@@ -30,6 +30,7 @@ export class DisplayElement extends TailwindElement(style) {
   render() {
     return html`
       <div id="display-box">
+        <h3>Tätigkeits-Übersicht</h3>  
         <p id="test">${this.day}</p>
       </div>
     `;
