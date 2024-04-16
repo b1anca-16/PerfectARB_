@@ -1,0 +1,19 @@
+#display-box {
+    width: 80%; 
+    padding: 20px;
+    margin-left: 40px;
+    margin-left: 40px;
+    margin-top: 20px;
+    box-sizing: border-box;
+    height: 1000px; 
+    border: 1px solid #ccc; 
+    padding: 10px; 
+    font-family: Arial, sans-serif; 
+    font-size: 14px; 
+    color: #333; 
+    background-color: rgb(212 212 212); 
+    overflow: auto; /* Überlaufsstil */
+    position: relative;
+    max-height: min-content;
+    height: 200px;
+}

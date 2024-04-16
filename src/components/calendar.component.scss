@@ -14,7 +14,8 @@ h1 {
 }
 
 .feld {
-  @apply border border-slate-300 flex justify-end;
+  @apply border border-slate-300 h-28 flex;
+  justify-content: space-between;
 }
 
 .feld:hover {
@@ -55,4 +56,13 @@ h1 {
 }
 .heute:hover {
   background-color: rgb(212 212 212);
+}
+
+.addButton {
+  background-color: rgb(128, 128, 228);
+  height: 20px;
+  width: 30px;
+  color: white;
+  border-radius: 5px;
+  font-size: 15px;
 }

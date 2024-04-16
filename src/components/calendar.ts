@@ -1,6 +1,6 @@
 import { LitElement, css, html, unsafeCSS} from "lit";
 import { map } from 'lit/directives/map.js';
-import { customElement, query, state } from "lit/decorators.js";
+import { customElement, query, state, property } from "lit/decorators.js";
 import { TailwindElement } from "../shared/tailwind.element";
 import style from './calendar.component.scss?inline'; 
 
@@ -11,6 +11,7 @@ export class CalendarElement extends TailwindElement(style) {
   @state() year = this.date.getFullYear();
   @state() dateStr = this.date.toLocaleString('de-de', { year: 'numeric', month: 'long' });
   @state() weekDays = ["Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag","Sonntag"];
+  @property() message: String;
 
   constructor() {
     super();
@@ -46,9 +47,19 @@ export class CalendarElement extends TailwindElement(style) {
     this.dispatchEvent(clickedDate);
   }
 
+  addTask(currentDate: Date, index: number) {
+    const addTask = new CustomEvent('addTask', {
+      detail: {
+        date: currentDate
+      }
+    })
+    this.dispatchEvent(addTask);
+  }
+
   render() {
     return html`
       <h1>Kalender</h1>
+      <p>${this.message}</p>
       <div class="flex justify-center">
         <div class="w-full flex">
           <div class="w-1/2 flex justify-end items-center">
@@ -61,7 +72,7 @@ export class CalendarElement extends TailwindElement(style) {
           </div>
         </div>
       </div>
-      <div class="h-screen flex justify-center mt-8">
+      <div class="h-full flex justify-center mt-8">
         <div class="kalender">
             ${this.weekDays.map((item) => html`<div class="weekdays">${item}</div>`)}
             ${this.getDaysInMonth().map((currentDate, index) => html`
@@ -70,6 +81,7 @@ export class CalendarElement extends TailwindElement(style) {
                   this.clickDate(index, currentDate);
                 }
                }} class="feld">
+               <button @click=${() => {this.addTask(currentDate, index)}} class="addButton">+</button>
                <div class=${currentDate instanceof Date ? (this.isCurrentDate(currentDate) ? 'today' : 'normal-day') : 'invalid-date'}>
                ${currentDate?.getDate()}
              </div>
