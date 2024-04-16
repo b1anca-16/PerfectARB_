@@ -2,16 +2,10 @@ import { LitElement, css, html, unsafeCSS} from "lit";
 import { map } from 'lit/directives/map.js';
 import { customElement, query, state } from "lit/decorators.js";
 import { TailwindElement } from "../shared/tailwind.element";
-
-//import style from "./calendar.css?inline";
 import style from './calendar.component.scss?inline'; 
-//import * as stylesCalendar from "./calendar.css";
 
 @customElement("calendar-element")
 export class CalendarElement extends TailwindElement(style) {
-    //static styles = style;
-    //static styles = unsafeCSS(styles);
-    //static styles = css`${unsafeCSS(styles)}`;
   @state() date = new Date();
   @state() month = this.date.getMonth();
   @state() year = this.date.getFullYear();
@@ -43,7 +37,7 @@ export class CalendarElement extends TailwindElement(style) {
     return [...emptyCells, ...daysArray];
   }
 
-  eventStarter(index: number, currentDate: Date) {
+  clickDate(index: number, currentDate: Date) {
     const clickedDate = new CustomEvent('clickedDate', {
       detail: {
         date: currentDate
@@ -54,7 +48,7 @@ export class CalendarElement extends TailwindElement(style) {
 
   render() {
     return html`
-      <h1 class="bg-orange-600">Kalender</h1>
+      <h1>Kalender</h1>
       <div class="flex justify-center">
         <div class="w-full flex">
           <div class="w-1/2 flex justify-end items-center">
@@ -73,7 +67,7 @@ export class CalendarElement extends TailwindElement(style) {
             ${this.getDaysInMonth().map((currentDate, index) => html`
               <div @click=${() => {
                 if (currentDate instanceof Date) {
-                  this.eventStarter(index, currentDate);
+                  this.clickDate(index, currentDate);
                 }
                }} class="feld">
                <div class=${currentDate instanceof Date ? (this.isCurrentDate(currentDate) ? 'today' : 'normal-day') : 'invalid-date'}>
