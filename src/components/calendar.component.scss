@@ -13,12 +13,12 @@ h1 {
   @apply pr-1 text-right;
 }
 
-.feld {
+.current-month, .other-month{
   @apply border border-slate-300 h-28 flex;
   justify-content: space-between;
 }
 
-.feld:hover {
+.current-month:hover {
   background-color: rgb(212 212 212);
 }
 

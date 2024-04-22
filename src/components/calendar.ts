@@ -11,7 +11,6 @@ export class CalendarElement extends TailwindElement(style) {
   @state() year = this.date.getFullYear();
   @state() dateStr = this.date.toLocaleString('de-de', { year: 'numeric', month: 'long' });
   @state() weekDays = ["Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag","Sonntag"];
-  @property() message: String;
 
   constructor() {
     super();
@@ -35,7 +34,10 @@ export class CalendarElement extends TailwindElement(style) {
       currentDate.setDate(firstDay.getDate() + index);
       return currentDate;
     });
-    return [...emptyCells, ...daysArray];
+    const remainingEmptyCells = 7 - (emptyCells.length + daysArray.length) % 7;
+    // Füge leere Zellen hinzu, um die letzte Zeile aufzufüllen
+    const remainingEmptyCellsArray = Array.from({ length: remainingEmptyCells }, () => null);
+    return [...emptyCells, ...daysArray, ...remainingEmptyCellsArray];
   }
 
   clickDate(index: number, currentDate: Date) {
@@ -56,40 +58,43 @@ export class CalendarElement extends TailwindElement(style) {
     this.dispatchEvent(addTask);
   }
 
-  render() {
-    return html`
-      <h1>Kalender</h1>
-      <p>${this.message}</p>
-      <div class="flex justify-center">
-        <div class="w-full flex">
-          <div class="w-1/2 flex justify-end items-center">
-            <button class=heute @click=${this.backToday} >Heute</button>
-            <button class="arrow" @click=${this.lastMonth}><</button>
-            <button class="arrow" @click=${this.nextMonth}>></button>
-          </div>
-          <div class="w-1/2 flex justify-start items-center">
-            <h2 class="mx-8 text-lg mb-5">${this.dateStr}</h2>
-          </div>
+render() {
+  return html`
+    <h1>Kalender</h1>
+    <div class="flex justify-center">
+      <div class="w-full flex">
+        <div class="w-1/2 flex justify-end items-center">
+          <button class=heute @click=${this.backToday} >Heute</button>
+          <button class="arrow" @click=${this.lastMonth}><</button>
+          <button class="arrow" @click=${this.nextMonth}>></button>
+        </div>
+        <div class="w-1/2 flex justify-start items-center">
+          <h2 class="mx-8 text-lg mb-5">${this.dateStr}</h2>
         </div>
       </div>
-      <div class="h-full flex justify-center mt-8">
-        <div class="kalender">
-            ${this.weekDays.map((item) => html`<div class="weekdays">${item}</div>`)}
-            ${this.getDaysInMonth().map((currentDate, index) => html`
+    </div>
+    <div class="h-full flex justify-center mt-8">
+      <div class="kalender">
+        ${this.weekDays.map((item) => html`<div class="weekdays">${item}</div>`)}
+        ${this.getDaysInMonth().map((currentDate, index) => {
+          if (currentDate instanceof Date) {
+            return html`
               <div @click=${() => {
-                if (currentDate instanceof Date) {
-                  this.clickDate(index, currentDate);
-                }
-               }} class="feld">
-               <button @click=${() => {this.addTask(currentDate, index)}} class="addButton btn">+</button>
-               <div class=${currentDate instanceof Date ? (this.isCurrentDate(currentDate) ? 'today' : 'normal-day') : 'invalid-date'}>
-               ${currentDate?.getDate()}
-             </div>
-              </div>`)}
-        </div>
+                this.clickDate(index, currentDate);
+              }} class="current-month">
+                <button @click=${() => {this.addTask(currentDate, index)}} class="addButton">+</button>
+                <div class=${this.isCurrentDate(currentDate) ? 'today' : 'normal-day'}>
+                  ${currentDate.getDate()}
+                </div>
+              </div>`;
+          } else {
+            return html`<div class="other-month"></div>`;
+          }
+        })}
       </div>
-    `;
-  }
+    </div>
+  `;
+}
 
   nextMonth(event: Event) {
     this.month++;

@@ -7,33 +7,25 @@ import style from './display.component.scss?inline';
 @customElement("display-element")
 export class DisplayElement extends TailwindElement(style) {
     @property() day:Date;
+    @state() daystring: string;
 
   constructor() {
-    super();
-  }
-  private openAddModal(e:CustomEvent) {
-    let date = e.detail.date;
-    console.log(date);
+    super(); 
   }
   
-  clickDate(index: number, currentDate: Date) {
-    const clickedDate = new CustomEvent('clickedDate', {
-      detail: {
-        date: currentDate
-      }
-    })
-    this.dispatchEvent(clickedDate);
+
+  makeDayString() {
+    this.daystring = this.day.toLocaleString('de-DE', { day:"numeric", month:"long", year:"numeric" });
   }
-
-
+  
 
   render() {
     return html`
       <div id="display-box">
-        <h3>Tätigkeits-Übersicht</h3>  
-        <p id="test">${this.day}</p>
+        <h3>Tätigkeits-Übersicht</h3>
+        ${this.makeDayString()}
+        <p id="test">${this.daystring}</p>
       </div>
     `;
   }
-
 }

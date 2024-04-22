@@ -33,12 +33,12 @@ export class StartElement extends TailwindElement(style) {
 
   render() {
     return html`
-      <calendar-element @clickedDate=${this.handleClickDate} @addTask=${this.openAddModal} message="test"></calendar-element>
+      <calendar-element @clickedDate=${this.handleClickDate} @addTask=${this.openAddModal}></calendar-element>
       <display-element day=${this.clickedDate}></display-element>
       
       <dialog id="modal" class="modal">
         <div class="modal-box">
-        <h3 class="font-bold text-lg">Was habe ich am ${this.clickedDateString} ich gemacht?</h3>
+        <h3 class="font-bold text-lg">Was habe ich am ${this.clickedDateString} gemacht?</h3>
         <label for="task">Tätigkeit:</label>
         <input type="text" id="task" name="task"><br>
         <form method="dialog" class="modal-backdrop">
