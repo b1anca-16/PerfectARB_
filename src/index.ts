@@ -2,6 +2,7 @@ import { html } from "lit";
 import { customElement, query, state, property } from "lit/decorators.js";
 import "./components/calendar";
 import "./components/display";
+import "./components/projects";
 import { TailwindElement } from "./shared/tailwind.element";
 import style from "./index.css?inline";
 
@@ -33,7 +34,10 @@ export class StartElement extends TailwindElement(style) {
 
   render() {
     return html`
-      <calendar-element @clickedDate=${this.handleClickDate} @addTask=${this.openAddModal}></calendar-element>
+      <div class="flex flex-row">
+      <calendar-element class="w-3/4" @clickedDate=${this.handleClickDate} @addTask=${this.openAddModal}></calendar-element>
+      <projects-element class="ml-3"></projects-element>
+      </div>
       <display-element day=${this.clickedDate}></display-element>
       
       <dialog id="modal" class="modal">
@@ -44,9 +48,9 @@ export class StartElement extends TailwindElement(style) {
         <form method="dialog" class="modal-backdrop">
         <button @click=${this.closeAddModal} class="btn">Close</button>
         </form>
-      </div>
+        </div>
     
-</dialog>
+      </dialog>
 
     `;
   }
