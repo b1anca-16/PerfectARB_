@@ -7,13 +7,13 @@ import { TailwindElement } from "./shared/tailwind.element";
 import style from "./index.css?inline";
 import "./db";
 import { openDB, deleteDB, wrap, unwrap } from 'idb';
-import { DBStart } from "./db";
+import { startDB } from "./db";
 
 async function doDatabaseStuff() {
   const db = await openDB("data");
 }
 
-DBStart();
+startDB();
 doDatabaseStuff();
 
 

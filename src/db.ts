@@ -1,21 +1,25 @@
 import { openDB, DBSchema } from 'idb';
 
-interface Entry {
-    uuid: string;
-    title: string;
-    content: string;
+interface Task {
+    date: Date,
+    text: string,
+    project: string
 }
 
 interface MyDBSchema extends DBSchema {
+    projects: {
+        key: string;
+        value: Task;
+    };
     entrys: {
         key: string;
-        value: Entry;
+        value: Task;
     };
 };
 
-export const DBStart = function () {
+export const startDB =  function () {
     let db!: IDBDatabase;
-    const request = indexedDB.open('data', 1);
+    const request = indexedDB.open('data', 3);
     request.onerror = (err) => console.error(`IndexedDB error: ${request.error}`, err);
     request.onsuccess = () => (db = request.result);
     request.onupgradeneeded = () => {
@@ -23,14 +27,30 @@ export const DBStart = function () {
         // Überprüfe, ob der Objektstore bereits vorhanden ist
         if (!db.objectStoreNames.contains('entrys')) {
             // Erstelle den Objektstore entsprechend dem Schema
-            const entrysStore = db.createObjectStore('entrys', { keyPath: 'uuid' });
+            const entrysStore = db.createObjectStore('entrys', { keyPath: 'string' });
             // Erstelle Indizes, wenn benötigt
             entrysStore.createIndex('title', 'title', { unique: false });
         }
     };
-    
     return db;
 };
+export const addTask = (payload: Task) => {
+    const store = "tasks";
+    const open = indexedDB.open('data');
+    open.onsuccess = () => {
+        const db = open.result;
+        if ([...db.objectStoreNames].find((name) => name === store)) {
+            const transaction = db.transaction(store, 'readwrite');
+            const objectStore = transaction.objectStore(store);
+            const request = objectStore.add(payload);
+            request.onerror = () => console.error(request.error);
+            transaction.oncomplete = () => db.close();
+        } else {
+            indexedDB.deleteDatabase('data');
+        }
+    };
+};
+
 
 let db: IDBDatabase;
 export const getElement = <T>(store: string, key: string) => {
@@ -53,7 +73,9 @@ export const getElement = <T>(store: string, key: string) => {
         };
     });
 };
-export const addElement = (store: string, payload: Entry) => {
+
+export const addProject = (payload: Project) => {
+    const store = "projects";
     const open = indexedDB.open('data');
     open.onsuccess = () => {
         const db = open.result;
