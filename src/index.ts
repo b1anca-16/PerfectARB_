@@ -21,14 +21,23 @@ doDatabaseStuff();
 export class StartElement extends TailwindElement(style) {
   @state () clickedDate: Date;
   @state () clickedDateString : String;
+  @state () projects : Project [] = [];
+  @state () tasks : Task [] = [];
+  @state () tasksToShow : Task [] = [];
   @query ('#modal') modal: HTMLDialogElement;
   @query ('#task') inputTask: HTMLInputElement;
-  @state () newTask: String;
-  private handleClickDate(e: CustomEvent) {
-    this.clickedDate = e.detail.date;
-  }
+  @query ('#projectSelect') projectSelect: HTMLInputElement;
+
   constructor() {
     super();
+  }
+
+  private handleClickDate(e: CustomEvent) {
+    this.tasksToShow = [];
+    this.clickedDate = e.detail.date;
+    this.tasksToShow = this.tasks.filter((task) => {
+      return task.date == e.detail.date
+    })
   }
 
   private openAddModal(e:CustomEvent) {
@@ -37,31 +46,49 @@ export class StartElement extends TailwindElement(style) {
     this.clickedDateString = date.toLocaleString('de-de', { day: 'numeric', month: 'long' });
   }
 
-  private closeAddModal(e:CustomEvent) {
+  closeAddModal() {
     this.modal.close();
-    this.newTask = this.inputTask.value;
-    console.log(this.newTask);
+  }
+
+  private addNewTask(e:CustomEvent) {
+    this.modal.close();
+    const newTask : Task = {
+      text: this.inputTask.value,
+      date: this.clickedDate,
+      project: this.projectSelect.value
+    }
+    this.tasks.push(newTask);
+  }
+
+  updateProjectList(e: CustomEvent) {
+    const projectList = e.detail.list;
+    this.projects = projectList;
   }
   render() {
     return html`
       <div class="flex flex-row">
       <calendar-element class="w-3/4" @clickedDate=${this.handleClickDate} @addTask=${this.openAddModal}></calendar-element>
-      <projects-element class="ml-3"></projects-element>
+      <projects-element class="ml-3" @newProjectList=${this.updateProjectList}></projects-element>
       </div>
-      <display-element day=${this.clickedDate}></display-element>
+      <display-element day=${this.clickedDate} tasks=${this.tasksToShow}></display-element>
       
       <dialog id="modal" class="modal">
         <div class="modal-box">
         <h3 class="font-bold text-lg">Was habe ich am ${this.clickedDateString} gemacht?</h3>
         <label for="task">Tätigkeit:</label>
         <input type="text" id="task" name="task"><br>
+        <label for="projectSelect">Dazugehöriges Projekt: </label>
+            <select name="projectSelect" id="projectSelect">
+              ${this.projects.map((project) => {
+                return html`<option value = ${project.text}>${project.text}</option>`
+              })}
+            </select>
         <form method="dialog" class="modal-backdrop">
-        <button @click=${this.closeAddModal} class="btn">Close</button>
+        <button @click=${this.addNewTask} class="btn">Hinzufügen</button>
+        <button @click=${this.closeAddModal} class="btn">Abbrechen</button>
         </form>
         </div>
-    
       </dialog>
-
     `;
   }
 } 

@@ -7,17 +7,20 @@ import style from './display.component.scss?inline';
 @customElement("display-element")
 export class DisplayElement extends TailwindElement(style) {
     @property() day:Date;
-    @state() daystring: string;
+    @property() tasks: Task [] = [];
+    @state() daystring: string = "";
 
   constructor() {
     super(); 
   }
-  
+
+  updated() {
+    console.log(this.tasks);
+  }
 
   makeDayString() {
-    this.daystring = this.day.toLocaleString('de-DE', { day:"numeric", month:"long", year:"numeric" });
+      this.daystring = this.day.toLocaleString('de-DE', { day:"numeric", month:"long", year:"numeric"});
   }
-  
 
   render() {
     return html`
@@ -25,6 +28,15 @@ export class DisplayElement extends TailwindElement(style) {
         <h3>Tätigkeits-Übersicht</h3>
         ${this.makeDayString()}
         <p id="test">${this.daystring}</p>
+        <div>
+        ${this.tasks.length > 0 ? (
+          this.tasks.map((task) => html`
+          <p>${task.text}</p>
+          `)
+        ) : (
+          `Keine Aufgaben vorhanden`
+        )}
+        </div>
       </div>
     `;
   }

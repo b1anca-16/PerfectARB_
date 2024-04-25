@@ -10,11 +10,21 @@ import { openDB, DBSchema } from 'idb';
 export class ProjectsElement extends TailwindElement(style) {
     @state() projects: Array<{ text: string; color: string; }> = [];
     @query ('#todo-input') inputProject: HTMLInputElement;
-    @query ('#todo-list') projectList: HTMLInputElement;
+    @query ('#project-list') projectList: HTMLInputElement;
 
   constructor() {
     super(); 
   }
+
+  changeprojectList() {
+    const newProjectList = new CustomEvent('newProjectList', {
+      detail: {
+        list: this.projects
+      }
+    })
+    this.dispatchEvent(newProjectList);
+  }
+
   
   addTodo() {
     const inputText = this.inputProject.value.trim();
@@ -22,14 +32,17 @@ export class ProjectsElement extends TailwindElement(style) {
         const randomColor = Math.floor(Math.random()*16777215).toString(16);
         const newProject = { text: inputText, color: randomColor };
         this.projects.push(newProject);
-        console.log(this.projects);
         this.requestUpdate();
         this.inputProject.value = '';
+
+        this.changeprojectList(); 
     }
   }
 
   removeProject(index: number) {
     this.projects.splice(index, 1);
+    this.projects = [...this.projects];
+    this.changeprojectList(); 
   }
 
   render() {
@@ -38,10 +51,15 @@ export class ProjectsElement extends TailwindElement(style) {
         <h3>Projekte</h3>
         <div>
         <input type="text" id="todo-input" />
-        <button type="submit" id="add-todo" @click="${this.addTodo && addElement}">Projekt hinzufügen</button>
-        <ul id="todo-list">
+        <button id="add-todo" @click="${this.addTodo}">Projekt hinzufügen</button>
+        <ul id="project-list">
             ${this.projects.map((project, index) => {
-                return html`<li>${project.text} <span @click="${this.removeProject(index)}">✖️</span></li>`;
+                return html`
+                <li>
+                  <span class="dot" style="background-color: #${project.color};"></span>
+                  ${project.text} <span @click="${() => this.removeProject(index)}">✖️</span>
+                </li>
+                `;
             })}
         </ul>
         </div>
