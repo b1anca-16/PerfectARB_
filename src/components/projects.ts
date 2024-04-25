@@ -3,6 +3,8 @@ import { map } from 'lit/directives/map.js';
 import { customElement, query, state, property } from "lit/decorators.js";
 import { TailwindElement } from "../shared/tailwind.element";
 import style from './projects.component.scss?inline'; 
+import { getElement, removeElement, addElement, editElement } from "../db";
+import { openDB, DBSchema } from 'idb';
 
 @customElement("projects-element")
 export class ProjectsElement extends TailwindElement(style) {
@@ -36,7 +38,7 @@ export class ProjectsElement extends TailwindElement(style) {
         <h3>Projekte</h3>
         <div>
         <input type="text" id="todo-input" />
-        <button id="add-todo" @click="${this.addTodo}">Projekt hinzufügen</button>
+        <button type="submit" id="add-todo" @click="${this.addTodo && addElement}">Projekt hinzufügen</button>
         <ul id="todo-list">
             ${this.projects.map((project, index) => {
                 return html`<li>${project.text} <span @click="${this.removeProject(index)}">✖️</span></li>`;
@@ -88,3 +90,5 @@ document.getElementById('add-todo').addEventListener('click', addTodo);
 todoList.addEventListener('dragover', (event) => event.preventDefault());
 todoList.addEventListener('drop', handleDrop);
 */
+
+getElement

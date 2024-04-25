@@ -5,6 +5,17 @@ import "./components/display";
 import "./components/projects";
 import { TailwindElement } from "./shared/tailwind.element";
 import style from "./index.css?inline";
+import "./db";
+import { openDB, deleteDB, wrap, unwrap } from 'idb';
+import { DBStart } from "./db";
+
+async function doDatabaseStuff() {
+  const db = await openDB("data");
+}
+
+DBStart();
+doDatabaseStuff();
+
 
 @customElement("start-element")
 export class StartElement extends TailwindElement(style) {
@@ -31,7 +42,6 @@ export class StartElement extends TailwindElement(style) {
     this.newTask = this.inputTask.value;
     console.log(this.newTask);
   }
-
   render() {
     return html`
       <div class="flex flex-row">
