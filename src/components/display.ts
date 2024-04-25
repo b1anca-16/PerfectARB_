@@ -7,7 +7,7 @@ import style from './display.component.scss?inline';
 @customElement("display-element")
 export class DisplayElement extends TailwindElement(style) {
     @property() day:Date;
-    @state() daystring: string;
+    @state() daystring: string = "";
 
   constructor() {
     super(); 
@@ -15,7 +15,8 @@ export class DisplayElement extends TailwindElement(style) {
   
 
   makeDayString() {
-    this.daystring = this.day.toLocaleString('de-DE', { day:"numeric", month:"long", year:"numeric" });
+      this.daystring = this.day.toLocaleString('de-DE', { day:"numeric", month:"long", year:"numeric"});
+      console.log(this.daystring);
   }
   
 
