@@ -7,7 +7,7 @@ import { TailwindElement } from "./shared/tailwind.element";
 import style from "./index.css?inline";
 import "./db";
 import { openDB, deleteDB, wrap, unwrap } from 'idb';
-import { DBStart } from "./db";
+import { DBStart, addElement, addItemToStore} from "./db";
 
 async function doDatabaseStuff() {
   const db = await openDB("data");
@@ -58,6 +58,8 @@ export class StartElement extends TailwindElement(style) {
       project: this.projectSelect.value
     }
     this.tasks.push(newTask);
+    console.log(this.tasks);
+    addItemToStore(this.tasks);
   }
 
   updateProjectList(e: CustomEvent) {

@@ -15,11 +15,11 @@ interface MyDBSchema extends DBSchema {
 
 export const DBStart = function () {
     let db!: IDBDatabase;
-    const request = indexedDB.open('data', 1);
+    const request = indexedDB.open('tasks', 1);
     request.onerror = (err) => console.error(`IndexedDB error: ${request.error}`, err);
     request.onsuccess = () => (db = request.result);
     request.onupgradeneeded = () => {
-        const db = request.result;
+        //const db = request.result;
         // Überprüfe, ob der Objektstore bereits vorhanden ist
         if (!db.objectStoreNames.contains('entrys')) {
             // Erstelle den Objektstore entsprechend dem Schema
@@ -31,6 +31,26 @@ export const DBStart = function () {
     
     return db;
 };
+
+export async function addItemToStore(tasks: Task[]) {
+    // Öffne die IndexedDB-Datenbank oder erstelle sie, falls sie noch nicht existiert
+    const db = await openDB('tasks', 1, {
+      upgrade(db) {
+        // Erstelle einen Objektspeicher für die Tasks
+        const store = db.createObjectStore('tasks', { keyPath: 'id', autoIncrement: true });
+        // Definiere Indexe, wenn nötig
+        store.createIndex('date', 'date', { unique: false });
+        store.createIndex('project', 'project', { unique: false });
+        store.createIndex('text', 'text', { unique: false });
+      },
+    });
+  
+    // Füge jeden Task einzeln der Datenbank hinzu
+    for (const task of tasks) {
+      await db.add('tasks', { date: task.date, project: task.project, text: task.text });
+    }
+  }
+  
 
 let db: IDBDatabase;
 export const getElement = <T>(store: string, key: string) => {
