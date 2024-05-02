@@ -9,12 +9,8 @@ import "./db";
 import { openDB, deleteDB, wrap, unwrap } from 'idb';
 import { startDB, addItemToStore} from "./db";
 
-async function doDatabaseStuff() {
-  const db = await openDB("data");
-}
 
 startDB();
-doDatabaseStuff();
 
 
 @customElement("start-element")
@@ -58,7 +54,6 @@ export class StartElement extends TailwindElement(style) {
       project: this.projectSelect.value
     }
     this.tasks.push(newTask);
-    console.log(this.tasks);
     addItemToStore(this.tasks);
   }
 
