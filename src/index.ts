@@ -7,7 +7,7 @@ import { TailwindElement } from "./shared/tailwind.element";
 import style from "./index.css?inline";
 import "./db";
 import { openDB, deleteDB, wrap, unwrap } from 'idb';
-import { getStorageTasks, setStorageTask } from "./db";
+import { getStorageProjects, getStorageTasks, setStorageProjects, setStorageTask } from "./db";
 //import { startDB, addItemToStore, getAllTasks} from "./db";
 
 
@@ -15,7 +15,7 @@ import { getStorageTasks, setStorageTask } from "./db";
 export class StartElement extends TailwindElement(style) {
   @state () clickedDate: Date;
   @state () clickedDateString : String;
-  @state () projects : Project [] = [];
+  @state () projects : Project [] = getStorageProjects();
   @state () tasks : Task [] = [];
   @state () tasksToShow : Task [] = [];
   @query ('#modal') modal: HTMLDialogElement;
@@ -58,6 +58,8 @@ export class StartElement extends TailwindElement(style) {
       date: this.clickedDate,
       project: this.projectSelect.value
     }
+    console.log(this.projects);
+
     this.tasks.push(newTask);
     setStorageTask(this.tasks);
   }
@@ -65,6 +67,7 @@ export class StartElement extends TailwindElement(style) {
   updateProjectList(e: CustomEvent) {
     const projectList = e.detail.list;
     this.projects = projectList;
+    setStorageProjects(this.projects);
   }
   render() {
     return html`

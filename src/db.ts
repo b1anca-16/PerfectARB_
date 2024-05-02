@@ -15,7 +15,16 @@ export function getStorageTasks() {
     const storedTasks: Task[] = JSON.parse(storedTasksString);
     return storedTasks;
 }
+export function setStorageProjects(project: Project[]) {
+    localStorage.setItem('project', JSON.stringify(project));
+}
 
+export function getStorageProjects() {
+    const storedProjectsString = localStorage.getItem('project');
+    const storedProjects: Project[] = JSON.parse(storedProjectsString);
+    return storedProjects;
+
+}
 
 // Localstorage beispiel
 

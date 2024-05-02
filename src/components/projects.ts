@@ -5,16 +5,18 @@ import { TailwindElement } from "../shared/tailwind.element";
 import style from './projects.component.scss?inline'; 
 //import { getElement, removeElement, addProject, editElement } from "../db";
 import { openDB, DBSchema } from 'idb';
+import { getStorageProjects } from "../db";
 
 @customElement("projects-element")
 export class ProjectsElement extends TailwindElement(style) {
-    @state() projects: Project [] = [];
+    @state() projects: Project [] = getStorageProjects();
     @query ('#todo-input') inputProject: HTMLInputElement;
     @query ('#project-list') projectList: HTMLInputElement;
 
   constructor() {
     super(); 
   }
+
 
   changeprojectList() {
     const newProjectList = new CustomEvent('newProjectList', {
