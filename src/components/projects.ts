@@ -56,7 +56,7 @@ export class ProjectsElement extends TailwindElement(style) {
         <div id = "projectsDiv">
         
         <ul id="project-list">
-            ${this.projects.map((project, index) => {
+            ${this.projects?.map((project, index) => {
                 return html`
                 <li style="">
                 <span class="dot" style="background-color: #${project.color}"></span>

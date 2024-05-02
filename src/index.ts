@@ -84,7 +84,7 @@ export class StartElement extends TailwindElement(style) {
         <input type="text" id="task" name="task"><br>
         <label for="projectSelect">Dazugehöriges Projekt: </label>
             <select name="projectSelect" id="projectSelect">
-              ${this.projects.map((project) => {
+              ${this.projects?.map((project) => {
                 return html`<option value = ${project.text}>${project.text}</option>`
               })}
             </select>
