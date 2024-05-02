@@ -13,7 +13,7 @@ async function doDatabaseStuff() {
   const db = await openDB("data");
 }
 
-DBStart();
+startDB();
 doDatabaseStuff();
 
 

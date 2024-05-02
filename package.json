@@ -25,7 +25,7 @@
     "@typescript-eslint/parser": "^5.62.0",
     "css-loader": "^7.1.1",
     "daisyui": "^4.10.1",
-    "electron": "29.3.0",
+    "electron": "^29.3.1",
     "eslint": "^8.57.0",
     "eslint-plugin-import": "^2.29.1",
     "lit-scss-loader": "^2.0.1",
