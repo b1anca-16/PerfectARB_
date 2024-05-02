@@ -52,9 +52,8 @@ export class ProjectsElement extends TailwindElement(style) {
     return html`
       <div id="display-box">
         <h3>Projekte</h3>
-        <div>
-        <input type="text" id="todo-input" />
-        <button id="add-todo" @click="${this.addTodo}">Projekt hinzufügen</button>
+        <div id = "projectsDiv">
+        
         <ul id="project-list">
             ${this.projects.map((project, index) => {
                 return html`
@@ -65,6 +64,10 @@ export class ProjectsElement extends TailwindElement(style) {
                 `;
             })}
         </ul>
+        <div id="projectInput">
+          <input type="text" id="todo-input" />
+          <button id="add-todo" @click="${this.addTodo}">Projekt hinzufügen</button>
+        </div>
         </div>
       </div>
     `;

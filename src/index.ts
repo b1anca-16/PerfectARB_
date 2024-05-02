@@ -7,7 +7,7 @@ import { TailwindElement } from "./shared/tailwind.element";
 import style from "./index.css?inline";
 import "./db";
 import { openDB, deleteDB, wrap, unwrap } from 'idb';
-import { DBStart, addElement, addItemToStore} from "./db";
+import { startDB, addItemToStore} from "./db";
 
 async function doDatabaseStuff() {
   const db = await openDB("data");
@@ -70,7 +70,7 @@ export class StartElement extends TailwindElement(style) {
     return html`
       <div class="flex flex-row">
       <calendar-element class="w-3/4" @clickedDate=${this.handleClickDate} @addTask=${this.openAddModal}></calendar-element>
-      <projects-element class="ml-3" @newProjectList=${this.updateProjectList}></projects-element>
+      <projects-element class="ml-3 mt-20 mr-10" @newProjectList=${this.updateProjectList}></projects-element>
       </div>
       <display-element day=${this.clickedDate} tasks=${this.tasksToShow}></display-element>
       
