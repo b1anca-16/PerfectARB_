@@ -17,6 +17,54 @@ interface MyDBSchema extends DBSchema {
     };
 };
 
+// Localstorage beispiel
+
+export function setStorageTask(tasks: Task[]) {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+export function getStorageTasks() {
+    const storedTasksString = localStorage.getItem('tasks');
+    const storedTasks: Task[] = JSON.parse(storedTasksString);
+    return storedTasks;
+
+}
+
+
+let lArr: Array<{id: string, text: string, projectId: string}> = [];
+localStorage.setItem("projects", JSON.stringify(lArr))
+
+function parseLocalstorage(){
+    const stringData = localStorage.getItem("projects");
+    const jsData = JSON.parse(stringData);
+
+    return jsData;
+}
+
+function syncLocalstorage(){
+    localStorage.setItem("projects", JSON.stringify(lArr))
+}
+
+lArr  = parseLocalstorage() as  Array<{id: string, text: string, projectId: string}>;
+lArr.push({ 
+    id: crypto.randomUUID(),
+    text: "string",
+    projectId: "a"})
+    lArr.push({ 
+        id: crypto.randomUUID(),
+        text: "string",
+        projectId: "b"})
+    syncLocalstorage();
+
+    function filterForProject(projectIdFilter:string){
+        return lArr.filter((item)=>item.projectId === projectIdFilter)
+    }
+
+    console.log(filterForProject("b"))
+
+
+    /*
+
 export const startDB = function () {
     let db!: IDBDatabase;
     const request = indexedDB.open('tasks', 1);
@@ -194,3 +242,5 @@ export const removeElement = (store: string, key: string) => {
         }
     };
 };
+*/
+

@@ -55,7 +55,10 @@ li {
 }
 
 .dot {
-  width: 20px;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  display: inline-block;
 }
 
 #display-box-projects {

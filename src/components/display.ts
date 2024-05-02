@@ -15,16 +15,14 @@ export class DisplayElement extends TailwindElement(style) {
 
 
   makeDayString() {
-      this.daystring = this.day.toLocaleString('de-DE', { day:"numeric", month:"long", year:"numeric"});
-      console.log(this.daystring);
+      return new Date(this.day).toLocaleString('de-DE', { day:"numeric", month:"long", year:"numeric"});
   }
 
 
   render() {
     return html `<div id="display-box">
     <h3>Tätigkeits-Übersicht</h3>
-    ${this.makeDayString()}
-    <p id="test">${this.daystring}</p>
+    <p id="test">${this.makeDayString()}</p>
   </div>`
     ;
   }

@@ -3,7 +3,7 @@ import { map } from 'lit/directives/map.js';
 import { customElement, query, state, property } from "lit/decorators.js";
 import { TailwindElement } from "../shared/tailwind.element";
 import style from './projects.component.scss?inline'; 
-import { getElement, removeElement, addProject, editElement } from "../db";
+//import { getElement, removeElement, addProject, editElement } from "../db";
 import { openDB, DBSchema } from 'idb';
 
 @customElement("projects-element")
@@ -38,7 +38,6 @@ export class ProjectsElement extends TailwindElement(style) {
         this.requestUpdate();
         this.inputProject.value = '';
         this.changeprojectList(); 
-        addProject(newProject);
     }
   }
 
@@ -57,9 +56,9 @@ export class ProjectsElement extends TailwindElement(style) {
         <ul id="project-list">
             ${this.projects.map((project, index) => {
                 return html`
-                <li>
-                  <span class="dot" style="background-color: #${project.color};"></span>
-                  ${project.text} <span @click="${() => this.removeProject(index)}">✖️</span>
+                <li style="">
+                <span class="dot" style="background-color: #${project.color}"></span>
+                  <span>${project.text}</span> <span @click="${() => this.removeProject(index)}">✖️</span>
                 </li>
                 `;
             })}

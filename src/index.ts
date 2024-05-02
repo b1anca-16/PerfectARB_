@@ -7,10 +7,11 @@ import { TailwindElement } from "./shared/tailwind.element";
 import style from "./index.css?inline";
 import "./db";
 import { openDB, deleteDB, wrap, unwrap } from 'idb';
-import { startDB, addItemToStore, getAllTasks} from "./db";
+import { getStorageTasks, setStorageTask } from "./db";
+//import { startDB, addItemToStore, getAllTasks} from "./db";
 
 
-startDB();
+//startDB();
 
 
 @customElement("start-element")
@@ -28,18 +29,18 @@ export class StartElement extends TailwindElement(style) {
     super();
   }
 
+  private normalizeDate(date: Date){
+    return date.toLocaleString('de-DE');
+  }
+
   private handleClickDate(e: CustomEvent) {
-    getAllTasks().then(
-      tasks => {
-        this.tasksToShow = [];
-        this.clickedDate = e.detail.date;
-        this.tasksToShow = tasks.filter((task) => {
-          console.log("Clicked Date: " + this.clickedDate + "DateTest: " + task.date);
-          return task.date === this.clickedDate;
-        })
-        console.log("Tasks to Show: " + this.tasksToShow);
-      }
-    );
+    this.tasksToShow = [];
+    this.clickedDate = e.detail.date;
+
+    this.tasksToShow = getStorageTasks().filter((task) => {
+      return (this.normalizeDate(this.clickedDate)  === this.normalizeDate(task.date));
+    })
+    console.log(this.tasksToShow);
   }
 
   private openAddModal(e:CustomEvent) {
@@ -60,7 +61,7 @@ export class StartElement extends TailwindElement(style) {
       project: this.projectSelect.value
     }
     this.tasks.push(newTask);
-    addItemToStore(newTask);
+    setStorageTask(this.tasks);
   }
 
   updateProjectList(e: CustomEvent) {
