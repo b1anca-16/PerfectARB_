@@ -11,9 +11,6 @@ import { getStorageTasks, setStorageTask } from "./db";
 //import { startDB, addItemToStore, getAllTasks} from "./db";
 
 
-//startDB();
-
-
 @customElement("start-element")
 export class StartElement extends TailwindElement(style) {
   @state () clickedDate: Date;
@@ -36,11 +33,12 @@ export class StartElement extends TailwindElement(style) {
   private handleClickDate(e: CustomEvent) {
     this.tasksToShow = [];
     this.clickedDate = e.detail.date;
-
+    
     this.tasksToShow = getStorageTasks().filter((task) => {
-      return (this.normalizeDate(this.clickedDate)  === this.normalizeDate(task.date));
+      const taskDate = new Date(task.date);
+      return (this.normalizeDate(this.clickedDate)  === this.normalizeDate(taskDate));
     })
-    console.log(this.tasksToShow);
+    //console.log(this.tasksToShow);
   }
 
   private openAddModal(e:CustomEvent) {
@@ -74,7 +72,7 @@ export class StartElement extends TailwindElement(style) {
       <calendar-element class="w-3/4" @clickedDate=${this.handleClickDate} @addTask=${this.openAddModal}></calendar-element>
       <projects-element class="ml-3 mt-20 mr-10" @newProjectList=${this.updateProjectList}></projects-element>
       </div>
-      <display-element day=${this.clickedDate} tasks=${this.tasksToShow}></display-element>
+      <display-element day=${this.clickedDate} .tasks=${this.tasksToShow}></display-element>
       
       <dialog id="modal" class="modal">
         <div class="modal-box">

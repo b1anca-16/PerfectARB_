@@ -8,14 +8,22 @@ import style from './display.component.scss?inline';
 export class DisplayElement extends TailwindElement(style) {
     @property() day:Date;
     @state() daystring: string = "";
+    @property({ attribute: true }) tasks: Task[];
 
   constructor() {
+    
     super(); 
+    console.log("test");
+    console.log(this.tasks);
+  }
+
+  firstUpdated(): void {
+
   }
 
 
   makeDayString() {
-      return new Date(this.day).toLocaleString('de-DE', { day:"numeric", month:"long", year:"numeric"});
+    return new Date(this.day).toLocaleString('de-DE', { day:"numeric", month:"long", year:"numeric"});
   }
 
 
@@ -23,6 +31,7 @@ export class DisplayElement extends TailwindElement(style) {
     return html `<div id="display-box">
     <h3>Tätigkeits-Übersicht</h3>
     <p id="test">${this.makeDayString()}</p>
+    <p>${this.tasks.map((task) => task.text)}</p>
   </div>`
     ;
   }

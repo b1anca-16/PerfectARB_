@@ -6,19 +6,6 @@ interface Task {
     project: string
 }
 
-interface MyDBSchema extends DBSchema {
-    projects: {
-        key: string;
-        value: Task;
-    };
-    entrys: {
-        key: string;
-        value: Task;
-    };
-};
-
-// Localstorage beispiel
-
 export function setStorageTask(tasks: Task[]) {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
@@ -27,9 +14,10 @@ export function getStorageTasks() {
     const storedTasksString = localStorage.getItem('tasks');
     const storedTasks: Task[] = JSON.parse(storedTasksString);
     return storedTasks;
-
 }
 
+
+// Localstorage beispiel
 
 let lArr: Array<{id: string, text: string, projectId: string}> = [];
 localStorage.setItem("projects", JSON.stringify(lArr))
