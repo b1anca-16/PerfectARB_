@@ -38,8 +38,10 @@ h1 {
   height: 80%;
   display: grid;
   grid-template-rows: 32px auto;
-  border-color: #C8C8C8;
-  border: none;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow-y: auto;
+  height: 594px;;
 }
 
 .arrow {

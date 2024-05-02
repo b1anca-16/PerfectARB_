@@ -50,7 +50,7 @@ export class ProjectsElement extends TailwindElement(style) {
 
   render() {
     return html`
-      <div id="display-box">
+      <div id="display-box-projects">
         <h3>Projekte</h3>
         <div id = "projectsDiv">
         

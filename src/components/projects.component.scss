@@ -57,3 +57,26 @@ li {
 .dot {
   width: 20px;
 }
+
+#display-box-projects {
+  width: 93%; 
+  padding: 20px;
+  margin-top: 70px;
+  box-sizing: border-box;
+  height: 1000px; 
+  border: 1px solid #ccc; 
+  padding: 10px; 
+  font-family: Arial, sans-serif; 
+  font-size: 14px; 
+  color: #333; 
+  background-color: rgb(245 245 245); 
+  overflow: auto; 
+  position: relative;
+  max-height: min-content;
+  height: 594px;
+  border-radius: 5px;
+}
+
+#add-todo {
+  margin-top: 10px;
+}
