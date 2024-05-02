@@ -8,6 +8,7 @@ import style from './display.component.scss?inline';
 export class DisplayElement extends TailwindElement(style) {
     @property() day:Date;
     @state() daystring: string = "";
+    @property() tasks: Task[] = [];
 
   constructor() {
     super(); 
@@ -23,6 +24,7 @@ export class DisplayElement extends TailwindElement(style) {
     return html `<div id="display-box">
     <h3>Tätigkeits-Übersicht</h3>
     <p id="test">${this.makeDayString()}</p>
+
   </div>`
     ;
   }

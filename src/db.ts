@@ -29,7 +29,16 @@ export function getStorageTasks() {
     return storedTasks;
 
 }
+export function setStorageProjects(project: Project[]) {
+    localStorage.setItem('project', JSON.stringify(project));
+}
 
+export function getStorageProjects() {
+    const storedProjectsString = localStorage.getItem('project');
+    const storedProjects: Project[] = JSON.parse(storedProjectsString);
+    return storedProjects;
+
+}
 
 let lArr: Array<{id: string, text: string, projectId: string}> = [];
 localStorage.setItem("projects", JSON.stringify(lArr))
