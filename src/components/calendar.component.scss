@@ -1,5 +1,7 @@
 h1 {
   @apply text-xl;
+  padding-top: 25px;
+  padding-left: 25px;
 }
 
 .today {
@@ -7,6 +9,7 @@ h1 {
   background-color: #2A3778;
   width: 26px;
   height: 26px;
+  border-radius: 5px
 }
 
 .normal-day {
@@ -16,21 +19,27 @@ h1 {
 .current-month, .other-month{
   @apply border border-slate-300 h-28 flex;
   justify-content: space-between;
+  border-width: px;
 }
 
 .current-month:hover {
-  background-color: rgb(212 212 212);
+  background-color: #D4D4D4;
 }
 
 .weekdays {
   @apply border border-slate-300 flex justify-center;
+  vertical-align: middle;
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 
 .kalender {
   @apply w-11/12 border-2 border-slate-300 bg-neutral-100 grid grid-cols-7 lg:w-11/12 xl:w-11/12 max-w-7xl;
-  height: 83%;
+  height: 80%;
   display: grid;
   grid-template-rows: 32px auto;
+  border-color: #C8C8C8;
+  border: none;
 }
 
 .arrow {
@@ -56,14 +65,20 @@ h1 {
   border-width: medium; 
 }
 .heute:hover {
-  background-color: rgb(212 212 212);
+  background-color: #D4D4D4;
 }
 
 .addButton {
-  background-color: rgb(128, 128, 228);
+  font-size: 8px;
+  background-color: #9b99ca;
   height: 20px;
-  width: 30px;
-  color: white;
+  width: 20px;
+  color: rgb(255, 255, 255);
   border-radius: 5px;
   font-size: 15px;
+  justify-content:center;
+  }
+
+.addButton:hover {
+background-color: #8080E4;
 }
