@@ -17,24 +17,59 @@ interface MyDBSchema extends DBSchema {
     };
 };
 
-export const startDB =  function () {
+export const startDB = function () {
     console.log("Aufruf startDB");
     let db!: IDBDatabase;
     const request = indexedDB.open('tasks', 1);
     request.onerror = (err) => console.error(`IndexedDB error: ${request.error}`, err);
     request.onsuccess = () => (db = request.result);
-    request.onupgradeneeded = () => {
-        const db = request.result;
-        // Überprüfe, ob der Objektstore bereits vorhanden ist
+    request.onupgradeneeded = (event) => {
+        const db = (event.target as IDBOpenDBRequest).result as IDBDatabase;
+        
         if (!db.objectStoreNames.contains('entrys')) {
-            // Erstelle den Objektstore entsprechend dem Schema
-            const entrysStore = db.createObjectStore('entrys', { keyPath: 'string' });
-            // Erstelle Indizes, wenn benötigt
-            entrysStore.createIndex('title', 'title', { unique: false });
+            const entrysStore = db.createObjectStore('entrys', { autoIncrement: true });
+            entrysStore.createIndex('date', 'date', { unique: false });
+            entrysStore.createIndex('project', 'project', { unique: false });
+            entrysStore.createIndex('text', 'text', { unique: false });
         }
     };
     return db;
 };
+
+export async function addItemToStore(tasks: Task[]) {
+    console.log(tasks);
+    // Öffne die IndexedDB-Datenbank oder erstelle sie, falls sie noch nicht existiert
+    const request = indexedDB.open('tasks', 1);
+    
+    return new Promise<void>((resolve, reject) => {
+        request.onerror = (err) => {
+            console.error(`IndexedDB error: ${request.error}`, err);
+            reject(err);
+        };
+        
+        request.onsuccess = () => {
+            console.log("Sucess");
+            const db = request.result;
+            const transaction = db.transaction(['entrys'], 'readwrite');
+            const store = transaction.objectStore('entrys');
+            console.log(store);
+            
+            // Füge jeden Task einzeln der Datenbank hinzu
+            for (const task of tasks) {
+                const request = store.add(task);
+                request.onerror = (err) => {
+                    console.error('Fehler beim Hinzufügen des Tasks:', err);
+                    reject(err);
+                };
+            }
+            
+            transaction.oncomplete = () => {
+                console.log('Tasks erfolgreich hinzugefügt.');
+                resolve();
+            };
+        };
+    });
+}
 
 
 export const addTask = (payload: Task) => {
@@ -53,29 +88,6 @@ export const addTask = (payload: Task) => {
         }
     };
 };
-
-
-export async function addItemToStore(tasks: Task[]) {
-    // Öffne die IndexedDB-Datenbank oder erstelle sie, falls sie noch nicht existiert
-    console.log("Aufruf Start addItemToStore");
-    const dbPromise = await openDB('tasks', 1, {
-      upgrade(db) {
-        console.log("aufgerufen");
-        // Erstelle einen Objektspeicher für die Tasks
-        const store = db.createObjectStore('tasks123', { keyPath: 'id', autoIncrement: true });
-        console.log(store);
-        // Definiere Indexe, wenn nötig
-        store.createIndex('date', 'date', { unique: false });
-        store.createIndex('project', 'project', { unique: false });
-        store.createIndex('text', 'text', { unique: false });
-      },
-    });
-  
-    // Füge jeden Task einzeln der Datenbank hinzu
-    for (const task of tasks) {
-      await db.add('tasks', { date: task.date, project: task.project, text: task.text });
-    }
-  }
   
 
 let db: IDBDatabase;
