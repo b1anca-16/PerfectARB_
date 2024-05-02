@@ -60,7 +60,6 @@ export class CalendarElement extends TailwindElement(style) {
 
 render() {
   return html`
-    <h1>Kalender</h1>
     <div class="flex justify-center">
       <div class="w-full flex">
         <div class="w-1/2 flex justify-end items-center">

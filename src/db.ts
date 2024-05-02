@@ -18,7 +18,6 @@ interface MyDBSchema extends DBSchema {
 };
 
 export const startDB = function () {
-    console.log("Aufruf startDB");
     let db!: IDBDatabase;
     const request = indexedDB.open('tasks', 1);
     request.onerror = (err) => console.error(`IndexedDB error: ${request.error}`, err);
@@ -36,8 +35,8 @@ export const startDB = function () {
     return db;
 };
 
-export async function addItemToStore(tasks: Task[]) {
-    console.log(tasks);
+export async function addItemToStore(task: Task) {
+    console.log(task);
     // Öffne die IndexedDB-Datenbank oder erstelle sie, falls sie noch nicht existiert
     const request = indexedDB.open('tasks', 1);
     
@@ -48,27 +47,53 @@ export async function addItemToStore(tasks: Task[]) {
         };
         
         request.onsuccess = () => {
-            console.log("Sucess");
+            console.log("Success");
             const db = request.result;
             const transaction = db.transaction(['entrys'], 'readwrite');
             const store = transaction.objectStore('entrys');
             
-            // Füge jeden Task einzeln der Datenbank hinzu
-            for (const task of tasks) {
-                const request = store.add(task);
-                request.onerror = (err) => {
-                    console.error('Fehler beim Hinzufügen des Tasks:', err);
-                    reject(err);
-                };
-            }
-            
-            transaction.oncomplete = () => {
-                console.log('Tasks erfolgreich hinzugefügt.');
+            // Füge die einzelne Task zur Datenbank hinzu
+            const addRequest = store.add(task);
+            addRequest.onerror = (err) => {
+                console.error('Fehler beim Hinzufügen der Task:', err);
+                reject(err);
+            };
+            addRequest.onsuccess = () => {
                 resolve();
             };
         };
     });
 }
+
+export async function getAllTasks() {
+    // Öffne die IndexedDB-Datenbank oder erstelle sie, falls sie noch nicht existiert
+    const request = indexedDB.open('tasks', 1);
+    
+    return new Promise<Task[]>((resolve, reject) => {
+        request.onerror = (err) => {
+            console.error(`IndexedDB error: ${request.error}`, err);
+            reject(err);
+        };
+        
+        request.onsuccess = () => {
+            const db = request.result;
+            const transaction = db.transaction(['entrys'], 'readonly');
+            const store = transaction.objectStore('entrys');
+            
+            // Rufe alle Einträge aus dem Objektstore ab
+            const getAllRequest = store.getAll();
+            getAllRequest.onerror = (err) => {
+                console.error('Fehler beim Abrufen der Einträge:', err);
+                reject(err);
+            };
+            getAllRequest.onsuccess = () => {
+                const tasks: Task[] = getAllRequest.result;
+                resolve(tasks);
+            };
+        };
+    });
+}
+
 
 
 export const addTask = (payload: Task) => {

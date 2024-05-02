@@ -7,7 +7,7 @@ import { TailwindElement } from "./shared/tailwind.element";
 import style from "./index.css?inline";
 import "./db";
 import { openDB, deleteDB, wrap, unwrap } from 'idb';
-import { startDB, addItemToStore} from "./db";
+import { startDB, addItemToStore, getAllTasks} from "./db";
 
 
 startDB();
@@ -29,11 +29,17 @@ export class StartElement extends TailwindElement(style) {
   }
 
   private handleClickDate(e: CustomEvent) {
-    this.tasksToShow = [];
-    this.clickedDate = e.detail.date;
-    this.tasksToShow = this.tasks.filter((task) => {
-      return task.date == e.detail.date
-    })
+    getAllTasks().then(
+      tasks => {
+        this.tasksToShow = [];
+        this.clickedDate = e.detail.date;
+        this.tasksToShow = tasks.filter((task) => {
+          console.log("Clicked Date: " + this.clickedDate + "DateTest: " + task.date);
+          return task.date === this.clickedDate;
+        })
+        console.log("Tasks to Show: " + this.tasksToShow);
+      }
+    );
   }
 
   private openAddModal(e:CustomEvent) {
@@ -54,7 +60,7 @@ export class StartElement extends TailwindElement(style) {
       project: this.projectSelect.value
     }
     this.tasks.push(newTask);
-    addItemToStore(this.tasks);
+    addItemToStore(newTask);
   }
 
   updateProjectList(e: CustomEvent) {
