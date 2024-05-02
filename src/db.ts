@@ -52,7 +52,6 @@ export async function addItemToStore(tasks: Task[]) {
             const db = request.result;
             const transaction = db.transaction(['entrys'], 'readwrite');
             const store = transaction.objectStore('entrys');
-            console.log(store);
             
             // Füge jeden Task einzeln der Datenbank hinzu
             for (const task of tasks) {
