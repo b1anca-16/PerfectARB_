@@ -26,6 +26,16 @@ export function getStorageProjects() {
     return storedProjects;
 }
 
+export function setCurrentDate(currentDate: Date) {
+    localStorage.setItem('currentDate', JSON.stringify(currentDate));
+}
+
+export function getCurrentDate() {
+    const storedTasksString = localStorage.getItem('currentDate');
+    const date: Date = new Date (JSON.parse(storedTasksString));
+    return date;
+}
+
 // Localstorage beispiel
 
 /*
