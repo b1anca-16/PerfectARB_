@@ -1,7 +1,8 @@
 interface Task {
     date: Date,
     text: string,
-    project: Project
+    project: string,
+    mandays: Number
 }
 
 interface Project {
