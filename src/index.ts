@@ -34,11 +34,10 @@ export class StartElement extends TailwindElement(style) {
     this.tasksToShow = [];
     this.clickedDate = e.detail.date;
     
-    this.tasksToShow = getStorageTasks().filter((task) => {
+    this.tasksToShow = getStorageTasks()?.filter((task) => {
       const taskDate = new Date(task.date);
       return (this.normalizeDate(this.clickedDate)  === this.normalizeDate(taskDate));
     })
-    //console.log(this.tasksToShow);
   }
 
   private openAddModal(e:CustomEvent) {
@@ -58,7 +57,6 @@ export class StartElement extends TailwindElement(style) {
       date: this.clickedDate,
       project: this.projectSelect.value
     }
-    console.log(this.projects);
 
     this.tasks.push(newTask);
     setStorageTask(this.tasks);

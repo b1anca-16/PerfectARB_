@@ -13,8 +13,6 @@ export class DisplayElement extends TailwindElement(style) {
   constructor() {
     
     super(); 
-    console.log("test");
-    console.log(this.tasks);
   }
 
   firstUpdated(): void {

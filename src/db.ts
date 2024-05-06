@@ -21,13 +21,13 @@ export function setStorageProjects(project: Project[]) {
 
 export function getStorageProjects() {
     const storedProjectsString = localStorage.getItem('project');
-    const storedProjects: Project[] = JSON.parse(storedProjectsString);
+    const storedProjects: Project[] = storedProjectsString ? JSON.parse(storedProjectsString) : [];
     return storedProjects;
-
 }
 
 // Localstorage beispiel
 
+/*
 let lArr: Array<{id: string, text: string, projectId: string}> = [];
 localStorage.setItem("projects", JSON.stringify(lArr))
 
@@ -58,7 +58,7 @@ lArr.push({
     }
 
     console.log(filterForProject("b"))
-
+*/
 
     /*
 

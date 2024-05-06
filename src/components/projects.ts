@@ -36,7 +36,7 @@ export class ProjectsElement extends TailwindElement(style) {
           text: inputText,
           color: randomColor,
         };
-        this.projects.push(newProject);
+        this.projects?.push(newProject);
         this.requestUpdate();
         this.inputProject.value = '';
         this.changeprojectList(); 
