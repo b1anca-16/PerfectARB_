@@ -14,11 +14,24 @@ h1 {
 
 .normal-day {
   @apply pr-1 text-right;
+  height:20px;
+}
+
+.top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.tasks {
+  height:100%;
+  width:100%;
+  margin-top: 8px;
 }
 
 .current-month, .other-month{
   @apply border border-slate-300 h-28 flex;
-  justify-content: space-between;
+  flex-direction: column;
   border-width: px;
 }
 
@@ -33,6 +46,14 @@ h1 {
   padding-bottom: 3px;
 }
 
+.dot {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}
+
 .kalender {
   @apply w-11/12 border-2 border-slate-300 bg-neutral-100 grid grid-cols-7 lg:w-11/12 xl:w-11/12 max-w-7xl;
   height: 80%;
@@ -41,7 +62,7 @@ h1 {
   border: 1px solid #ccc;
   border-radius: 5px;
   overflow-y: auto;
-  height: 594px;;
+  height: 594px;
 }
 
 .arrow {

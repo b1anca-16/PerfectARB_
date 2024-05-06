@@ -3,6 +3,7 @@ import { map } from 'lit/directives/map.js';
 import { customElement, query, state, property } from "lit/decorators.js";
 import { TailwindElement } from "../shared/tailwind.element";
 import style from './calendar.component.scss?inline'; 
+import { getStorageProjects, getStorageTasks } from "../db";
 
 @customElement("calendar-element")
 export class CalendarElement extends TailwindElement(style) {
@@ -11,6 +12,7 @@ export class CalendarElement extends TailwindElement(style) {
   @state() year = this.date.getFullYear();
   @state() dateStr = this.date.toLocaleString('de-de', { year: 'numeric', month: 'long' });
   @state() weekDays = ["Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag","Sonntag"];
+  @property() tasks: Task[] = getStorageTasks();
 
   constructor() {
     super();
@@ -58,6 +60,10 @@ export class CalendarElement extends TailwindElement(style) {
     this.dispatchEvent(addTask);
   }
 
+    private normalizeDate(date: Date){
+    return date.toLocaleString('de-DE');
+  }
+
 render() {
   return html`
     <div class="flex justify-center">
@@ -81,9 +87,19 @@ render() {
               <div @click=${() => {
                 this.clickDate(index, currentDate);
               }} class="current-month">
-                <button @click=${() => {this.addTask(currentDate, index)}} class="addButton">+</button>
-                <div class=${this.isCurrentDate(currentDate) ? 'today' : 'normal-day'}>
-                  ${currentDate.getDate()}
+                <div class="top">
+                  <button @click=${() => {this.addTask(currentDate, index)}} class="addButton">+</button>
+                  <div class=${this.isCurrentDate(currentDate) ? 'today' : 'normal-day'}>
+                    ${currentDate.getDate()}
+                  </div>
+                </div>
+                <div class="tasks">
+                  ${this.tasks.filter((item) => {
+                    const taskDate = new Date(item.date);
+                    return (this.normalizeDate(currentDate)  === this.normalizeDate(taskDate));
+                  }).map((task) => {
+                    return html `<span class="dot" style="background-color: #${task.project.color}"></span>`
+                  })}
                 </div>
               </div>`;
           } else {

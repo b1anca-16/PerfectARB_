@@ -13,7 +13,7 @@ export function setStorageTask(tasks: Task[]) {
 
 export function getStorageTasks() {
     const storedTasksString = localStorage.getItem('tasks');
-    const storedTasks: Task[] = JSON.parse(storedTasksString);
+    const storedTasks: Task[] = storedTasksString ? JSON.parse(storedTasksString) : [];
     return storedTasks;
 }
 export function setStorageProjects(project: Project[]) {

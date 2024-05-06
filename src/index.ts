@@ -77,7 +77,7 @@ export class StartElement extends TailwindElement(style) {
   render() {
     return html`
       <div class="flex flex-row">
-      <calendar-element class="w-3/4" @clickedDate=${this.handleClickDate} @addTask=${this.openAddModal}></calendar-element>
+      <calendar-element class="w-3/4"  @clickedDate=${this.handleClickDate} @addTask=${this.openAddModal}></calendar-element>
       <projects-element class="ml-3 mt-20 mr-10" @newProjectList=${this.updateProjectList}></projects-element>
       </div>
       <display-element day=${this.clickedDate} .tasks=${this.tasksToShow}></display-element>
