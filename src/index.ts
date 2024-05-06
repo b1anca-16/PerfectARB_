@@ -61,7 +61,7 @@ export class StartElement extends TailwindElement(style) {
     const newTask : Task = {
       text: this.inputTask.value,
       date: this.clickedDate,
-      project: this.projectSelect.value,
+      project: project,
       mandays: Number(this.inputMandays.value)
     }
     console.log(newTask);
