@@ -21,6 +21,7 @@ export class StartElement extends TailwindElement(style) {
   @query ('#modal') modal: HTMLDialogElement;
   @query ('#task') inputTask: HTMLInputElement;
   @query ('#projectSelect') projectSelect: HTMLInputElement;
+  @query ('#mandays') inputMandays: HTMLInputElement;
 
   constructor() {
     super();
@@ -55,7 +56,8 @@ export class StartElement extends TailwindElement(style) {
     const newTask : Task = {
       text: this.inputTask.value,
       date: this.clickedDate,
-      project: this.projectSelect.value
+      project: this.projectSelect.value,
+      mandays: Number(this.inputMandays.value)
     }
 
     this.tasks.push(newTask);
@@ -85,7 +87,9 @@ export class StartElement extends TailwindElement(style) {
               ${this.projects?.map((project) => {
                 return html`<option value = ${project.text}>${project.text}</option>`
               })}
-            </select>
+            </select><br>
+        <label for="mandays">Stunden:</label>
+        <input type="text" id="mandays" name="mandays">
         <form method="dialog" class="modal-backdrop">
         <button @click=${this.addNewTask} class="btn">Hinzufügen</button>
         <button @click=${this.closeAddModal} class="btn">Abbrechen</button>
