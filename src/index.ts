@@ -38,6 +38,7 @@ export class StartElement extends TailwindElement(style) {
       const taskDate = new Date(task.date);
       return (this.normalizeDate(this.clickedDate)  === this.normalizeDate(taskDate));
     })
+    console.log(this.tasksToShow);
   }
 
   private openAddModal(e:CustomEvent) {
@@ -51,13 +52,17 @@ export class StartElement extends TailwindElement(style) {
   }
 
   private addNewTask(e:CustomEvent) {
+    const selectedProject = this.projectSelect.value;
+    const project = this.projects.find((project) => {
+      return project.text === selectedProject;
+    })
     this.modal.close();
     const newTask : Task = {
       text: this.inputTask.value,
       date: this.clickedDate,
-      project: this.projectSelect.value
+      project: project
     }
-
+    console.log(newTask);
     this.tasks.push(newTask);
     setStorageTask(this.tasks);
   }

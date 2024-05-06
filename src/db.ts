@@ -3,7 +3,7 @@ import { openDB, DBSchema } from 'idb';
 interface Task {
     date: Date,
     text: string,
-    project: string
+    project: Project
 }
 
 export function setStorageTask(tasks: Task[]) {

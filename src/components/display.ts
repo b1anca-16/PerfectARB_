@@ -29,7 +29,13 @@ export class DisplayElement extends TailwindElement(style) {
     return html `<div id="display-box">
     <h3>Tätigkeits-Übersicht</h3>
     <p id="test">${this.makeDayString()}</p>
-    <p>${this.tasks.map((task) => task.text)}</p>
+    ${this.tasks.map((task) => {
+      return html`
+      <p> 
+      <span class="dot" style="background-color: #${task.project.color}"></span>
+      ${task.text}<p>
+      `
+    })}
   </div>`
     ;
   }
