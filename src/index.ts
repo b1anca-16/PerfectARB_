@@ -8,6 +8,7 @@ import style from "./index.css?inline";
 import "./db";
 import { openDB, deleteDB, wrap, unwrap } from 'idb';
 import { getCurrentDate, getStorageProjects, getStorageTasks, setCurrentDate, setStorageProjects, setStorageTask } from "./db";
+import { exportArr, makeExport, projectsString } from "./export";
 //import { startDB, addItemToStore, getAllTasks} from "./db";
 
 
@@ -85,6 +86,19 @@ export class StartElement extends TailwindElement(style) {
     this.projects = projectList;
     setStorageProjects(this.projects);
   }
+
+  downloadFile() {
+    makeExport();
+    const link = document.createElement("a");
+    const content = `${projectsString}`;
+    const file = new Blob([content], {type: 'text/plain'});
+    link.href = URL.createObjectURL(file);
+    link.download = "arb.txt";
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }
+
+
   render() {
     return html`
       <div class="flex flex-row">
@@ -92,6 +106,7 @@ export class StartElement extends TailwindElement(style) {
       <projects-element class="ml-3 mt-20 mr-10" @newProjectList=${this.updateProjectList}></projects-element>
       </div>
       <display-element day=${this.clickedDate} .tasks=${this.tasksToShow}></display-element>
+      <button class="mx-6 my-2 bg-yellow-300" @click=${this.downloadFile}>ARB exportieren</button>
       
       <dialog id="modal" class="modal">
         <div class="modal-box">
