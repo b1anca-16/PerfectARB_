@@ -1,6 +1,6 @@
-import { openDB, DBSchema } from 'idb';
 
 interface Task {
+    id: String,
     date: Date,
     text: string,
     project: Project,
@@ -10,6 +10,7 @@ interface Task {
 export function setStorageTask(tasks: Task[]) {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
+
 
 export function getStorageTasks() {
     const storedTasksString = localStorage.getItem('tasks');

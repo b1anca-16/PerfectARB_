@@ -3,20 +3,29 @@ import { map } from 'lit/directives/map.js';
 import { customElement, query, state, property } from "lit/decorators.js";
 import { TailwindElement } from "../shared/tailwind.element";
 import style from './display.component.scss?inline'; 
+import { getStorageTasks, setStorageTask } from "../db";
 
 @customElement("display-element")
 export class DisplayElement extends TailwindElement(style) {
     @property() day:Date;
     @state() daystring: string = "";
-    @property({ attribute: true }) tasks: Task[];
+    @state() tasks: Task[] = [];
+
 
   constructor() {
     
     super(); 
   }
 
-  firstUpdated(): void {
 
+
+  changeTasksList() {
+    const newTasksList = new CustomEvent('newTasksList', {
+      detail: {
+        list: this.tasks
+      }
+    })
+    this.dispatchEvent(newTasksList);
   }
 
 
@@ -24,16 +33,32 @@ export class DisplayElement extends TailwindElement(style) {
     return new Date(this.day).toLocaleString('de-DE', { day:"numeric", month:"long", year:"numeric"});
   }
 
+  removeTask(id: String) {
+    let myTasks = getStorageTasks();
+    for (let i = 0; i<myTasks.length; i++) {
+      if(myTasks[i].id === id) {
+        myTasks.splice(i, 1);
+        break;
+      }
+    }
+    myTasks = [...myTasks];
+    this.tasks = myTasks;
+    console.log(myTasks);
+    this.changeTasksList();
+  }
+ 
 
   render() {
-    return html `<div id="display-box">
+    return html `
+    <div id="display-box">
     <h3>Tätigkeits-Übersicht</h3>
     <p id="test">${this.makeDayString()}</p>
-    ${this.tasks.map((task) => {
+
+    ${this.tasks?.map((task) => {
       return html`
       <p> 
       <span class="dot" style="background-color: #${task.project.color}"></span>
-      ${task.text}<p>
+      <span>${task.text}</span> <span @click="${() => this.removeTask(task.id)}">✖️</span>
       `
     })}
   </div>`

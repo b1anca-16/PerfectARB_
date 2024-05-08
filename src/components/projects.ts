@@ -4,7 +4,6 @@ import { customElement, query, state, property } from "lit/decorators.js";
 import { TailwindElement } from "../shared/tailwind.element";
 import style from './projects.component.scss?inline'; 
 //import { getElement, removeElement, addProject, editElement } from "../db";
-import { openDB, DBSchema } from 'idb';
 import { getStorageProjects } from "../db";
 
 @customElement("projects-element")

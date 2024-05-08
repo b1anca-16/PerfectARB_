@@ -6,10 +6,7 @@ import "./components/projects";
 import { TailwindElement } from "./shared/tailwind.element";
 import style from "./index.css?inline";
 import "./db";
-import { openDB, deleteDB, wrap, unwrap } from 'idb';
 import { getCurrentDate, getStorageProjects, getStorageTasks, setCurrentDate, setStorageProjects, setStorageTask } from "./db";
-//import { startDB, addItemToStore, getAllTasks} from "./db";
-
 
 @customElement("start-element")
 export class StartElement extends TailwindElement(style) {
@@ -42,6 +39,7 @@ export class StartElement extends TailwindElement(style) {
     setCurrentDate(this.clickedDate);
     
     this.filterTasks();
+    //console.log(this.tasksToShow);
   }
 
   filterTasks() {
@@ -68,12 +66,12 @@ export class StartElement extends TailwindElement(style) {
     })
     this.modal.close();
     const newTask : Task = {
+      id: crypto.randomUUID(),
       text: this.inputTask.value,
       date: this.clickedDate,
       project: project,
       mandays: Number(this.inputMandays.value)
     }
-    console.log(newTask);
     this.tasks.push(newTask);
     setStorageTask(this.tasks);
     window.location.reload();
@@ -81,17 +79,27 @@ export class StartElement extends TailwindElement(style) {
   }
 
   updateProjectList(e: CustomEvent) {
+    console.log("Project updated");
     const projectList = e.detail.list;
     this.projects = projectList;
     setStorageProjects(this.projects);
   }
+
+  updateTaskList (e: CustomEvent) {
+    console.log("Task updated");
+    const tasksList = e.detail.list;
+    this.tasks = tasksList;
+    setStorageTask(this.tasks);
+  }
+
+  
   render() {
     return html`
       <div class="flex flex-row">
       <calendar-element class="w-3/4"  @clickedDate=${this.handleClickDate} @addTask=${this.openAddModal}></calendar-element>
       <projects-element class="ml-3 mt-20 mr-10" @newProjectList=${this.updateProjectList}></projects-element>
       </div>
-      <display-element day=${this.clickedDate} .tasks=${this.tasksToShow}></display-element>
+      <display-element day=${this.clickedDate} .tasks=${this.tasksToShow} @newTasksList=${this.updateTaskList}></display-element>
       
       <dialog id="modal" class="modal">
         <div class="modal-box">
