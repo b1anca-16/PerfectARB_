@@ -120,7 +120,7 @@ export class StartElement extends TailwindElement(style) {
               })}
             </select><br>
         <label for="mandays">Stunden:</label>
-        <input type="text" id="mandays" name="mandays">
+        <input type="number" id="mandays" name="mandays"min="0.5" max="8" step="0.5">
         <form method="dialog" class="modal-backdrop">
         <button @click=${this.addNewTask} class="btn">Hinzufügen</button>
         <button @click=${this.closeAddModal} class="btn">Abbrechen</button>
