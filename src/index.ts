@@ -7,6 +7,9 @@ import { TailwindElement } from "./shared/tailwind.element";
 import style from "./index.css?inline";
 import "./db";
 import { getCurrentDate, getStorageProjects, getStorageTasks, setCurrentDate, setStorageProjects, setStorageTask } from "./db";
+import { exportArr, makeExport, projectsString } from "./export";
+//import { startDB, addItemToStore, getAllTasks} from "./db";
+
 
 @customElement("start-element")
 export class StartElement extends TailwindElement(style) {
@@ -85,6 +88,19 @@ export class StartElement extends TailwindElement(style) {
     setStorageProjects(this.projects);
   }
 
+  downloadFile() {
+    makeExport();
+    const link = document.createElement("a");
+    const content = `${projectsString}`;
+    const file = new Blob([content], {type: 'text/plain'});
+    link.href = URL.createObjectURL(file);
+    link.download = "arb.txt";
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }
+
+
+
   updateTaskList (e: CustomEvent) {
     console.log("Task updated");
     const tasksList = e.detail.list;
@@ -100,6 +116,7 @@ export class StartElement extends TailwindElement(style) {
       <projects-element class="ml-3 mt-20 mr-10" @newProjectList=${this.updateProjectList}></projects-element>
       </div>
       <display-element day=${this.clickedDate} .tasks=${this.tasksToShow} @newTasksList=${this.updateTaskList}></display-element>
+      <button class="mx-6 my-2 bg-yellow-300" @click=${this.downloadFile}>ARB exportieren</button>
       
       <dialog id="modal" class="modal">
         <div class="modal-box">
@@ -113,7 +130,7 @@ export class StartElement extends TailwindElement(style) {
               })}
             </select><br>
         <label for="mandays">Stunden:</label>
-        <input type="text" id="mandays" name="mandays">
+        <input type="number" id="mandays" name="mandays"min="0.5" max="8" step="0.5">
         <form method="dialog" class="modal-backdrop">
         <button @click=${this.addNewTask} class="btn">Hinzufügen</button>
         <button @click=${this.closeAddModal} class="btn">Abbrechen</button>
