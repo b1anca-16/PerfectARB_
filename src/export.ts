@@ -33,6 +33,7 @@ export let projectsString: String = "";
         }
         exportArr.push(projectExp);
         makeString(projectExp);
+        console.log(exportArr);
     })
   }
 
