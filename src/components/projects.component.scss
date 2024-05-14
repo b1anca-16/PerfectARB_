@@ -52,6 +52,7 @@ li {
 #add-todo:hover {
   background-color: #8080E4;
   color: white;
+
 }
 
 .dot {
@@ -65,20 +66,20 @@ li {
 #display-box-projects {
   width: 93%; 
   padding: 20px;
-  margin-top: 70px;
   box-sizing: border-box;
-  height: 1000px; 
   border: 1px solid #ccc; 
   padding: 10px; 
   font-family: Arial, sans-serif; 
   font-size: 14px; 
   color: #333; 
   background-color: rgb(245 245 245); 
-  overflow: auto; 
   position: relative;
   max-height: min-content;
-  height: 594px;
   border-radius: 5px;
+  margin-top: 15px;
+  margin-left: -20px;
+  height: 594px;
+  margin-bottom: 20px;
 }
 
 #add-todo {

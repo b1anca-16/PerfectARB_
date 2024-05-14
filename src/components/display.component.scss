@@ -3,11 +3,9 @@
     padding: 20px;
     margin-left: 30px;
     margin-right: 40px;
-    margin-top: 20px;
     box-sizing: border-box;
     height: 1000px; 
-    border: 1px solid #ccc; 
-    padding: 10px; 
+    border: 1px solid #ccc;
     font-family: Arial, sans-serif; 
     font-size: 14px; 
     color: #333; 
@@ -30,3 +28,7 @@ h3{
     display: inline-block;
     margin-right: 6px;
   }
+
+#removeBtn:hover {
+    cursor: pointer;
+}

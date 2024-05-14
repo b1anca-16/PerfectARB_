@@ -45,6 +45,7 @@ export class DisplayElement extends TailwindElement(style) {
     this.tasks = myTasks;
     console.log(myTasks);
     this.changeTasksList();
+    window.location.reload();
   }
  
 
@@ -58,7 +59,8 @@ export class DisplayElement extends TailwindElement(style) {
       return html`
       <p> 
       <span class="dot" style="background-color: #${task.project.color}"></span>
-      <span>${task.text}</span> <span @click="${() => this.removeTask(task.id)}">✖️</span>
+      <span>${task.mandays} Stunden:</span>
+      <span>${task.text}</span> <span id="removeBtn" @click="${() => this.removeTask(task.id)}">✖️</span>
       `
     })}
   </div>`

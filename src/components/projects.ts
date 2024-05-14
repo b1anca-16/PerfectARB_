@@ -43,9 +43,15 @@ export class ProjectsElement extends TailwindElement(style) {
   }
 
   removeProject(index: number) {
-    this.projects.splice(index, 1);
-    this.projects = [...this.projects];
-    this.changeprojectList(); 
+    if (this.projects.length > 0) {
+      const confirmation = confirm("Bist du dir sicher, dass du dieses Projekt entfernen möchtest?");
+      
+      if (confirmation) {
+        this.projects.splice(index, 1);
+        this.projects = [...this.projects];
+        this.changeprojectList(); 
+      }
+    }
   }
 
   render() {
