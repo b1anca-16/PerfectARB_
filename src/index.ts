@@ -116,7 +116,7 @@ export class StartElement extends TailwindElement(style) {
       <projects-element class="ml-3 mt-20 mr-10" @newProjectList=${this.updateProjectList}></projects-element>
       </div>
       <display-element day=${this.clickedDate} .tasks=${this.tasksToShow} @newTasksList=${this.updateTaskList}></display-element>
-      <button class="mx-6 my-2 bg-yellow-300" @click=${this.downloadFile}>ARB exportieren</button>
+      <button class="hover:bg-blue-700 bg-blue-900 text-white font-bold py-2 px-4 rounded inline-flex items-center" @click=${this.downloadFile}>ARB exportieren</button>
       
       <dialog id="modal" class="modal">
         <div class="modal-box">
