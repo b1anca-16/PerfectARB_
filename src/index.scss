@@ -1,5 +1,11 @@
-.modal {
+#modal {
     display: none;
+    max-height: 80vh;
+    @apply ring-0;
+  }
+
+  input[type="text"]:focus {
+    outline: none; /* Entfernt den orangenen Rand */
   }
   
   .modal.show {

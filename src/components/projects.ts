@@ -71,7 +71,7 @@ export class ProjectsElement extends TailwindElement(style) {
             })}
         </ul>
         <div id="projectInput">
-          <input type="text" id="todo-input" />
+          <input type="text" id="todo-input" maxlength="45"/>
           <button id="add-todo" @click="${this.addTodo}">Projekt hinzufügen</button>
         </div>
         </div>

@@ -35,10 +35,23 @@ export let projectsString: String = "";
         exportArr.push(projectExp);
     })
     exportArr = concatSameTasks(exportArr);
+    toMandays(exportArr);
     exportArr.forEach(project => {
       makeString(project);
     })
   }
+
+  function toMandays(array: ProjectExport[]) {
+    return array.forEach(project => {
+      project.tasks.map(task => {
+        task.mandays = round(task.mandays / 8);
+      })
+    })
+  }
+
+  function round (num: number) {
+    return Math.round(num * 100) / 100;
+}
 
   function concatSameTasks(array: ProjectExport[]) {
     const exportArray: ProjectExport[] = [];

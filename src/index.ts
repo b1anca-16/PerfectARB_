@@ -120,20 +120,22 @@ export class StartElement extends TailwindElement(style) {
       
       <dialog id="modal" class="modal">
         <div class="modal-box">
-        <h3 class="font-bold text-lg">Was habe ich am ${this.clickedDateString} gemacht?</h3>
-        <label for="task">Tätigkeit:</label>
-        <input type="text" id="task" name="task"><br>
-        <label for="projectSelect">Dazugehöriges Projekt: </label>
-            <select name="projectSelect" id="projectSelect">
+        <h3 class="font-bold text-xl mb-4">Was habe ich am ${this.clickedDateString} gemacht?</h3>
+        <label for="task" class="font-semibold mt-4">Tätigkeit:</label>
+        <input type="text" id="task" name="task" maxlength="80" class="w-full border-2 border-blue-700 rounded-md p-1"><br>
+        <label for="projectSelect" class="font-semibold my-3">Dazugehöriges Projekt: </label><br>
+            <select style="border-width: 3px;" class="border-blue-700 rounded-md p-1" name="projectSelect" id="projectSelect">
               ${this.projects?.map((project) => {
                 return html`<option value = ${project.text}>${project.text}</option>`
               })}
             </select><br>
-        <label for="mandays">Stunden:</label>
-        <input type="number" id="mandays" name="mandays"min="0.5" max="8" step="0.5">
+        <label for="mandays" class="font-semibold my-3">Stunden:</label><br>
+        <input style="border-width: 3px;" class="border-blue-700 rounded-md p-1" type="number" id="mandays" name="mandays"min="0.5" max="8" step="0.5">
         <form method="dialog" class="modal-backdrop">
-        <button @click=${this.addNewTask} class="btn">Hinzufügen</button>
-        <button @click=${this.closeAddModal} class="btn">Abbrechen</button>
+        <div class="flex flex-row justify-between mt-4">
+          <button @click=${this.addNewTask} class="w-28 bg-red-800 text-white rounded-md p-1 bg-blue-700">Hinzufügen</button>
+          <button @click=${this.closeAddModal} class="w-28 bg-red-800 text-white rounded-md p-1 bg-blue-700">Abbrechen</button>
+          </div>
         </form>
         </div>
       </dialog>
