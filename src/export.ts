@@ -15,12 +15,13 @@ const tasks = tasksString.map(task => {
   return task;
 });
 
-export const exportArr: ProjectExport[] = [];
+export let exportArr: ProjectExport[] = [];
 export let projectsString: String = "";
 
 
   export function makeExport() {
     projectsString = "";
+    exportArr = [];
     projects.map(project => {
         const matchingTasks: Task[] = tasks.filter(task => {
             return task.project.text == project.text;
@@ -32,8 +33,33 @@ export let projectsString: String = "";
           tasks: matchingTasks
         }
         exportArr.push(projectExp);
-        makeString(projectExp);
     })
+    exportArr = concatSameTasks(exportArr);
+    exportArr.forEach(project => {
+      makeString(project);
+    })
+  }
+
+  function concatSameTasks(array: ProjectExport[]) {
+    const exportArray: ProjectExport[] = [];
+    array.forEach(item => {
+      const mergedTasksMap : {[title: string] : Task} = {};
+      item.tasks.forEach(task => {
+        const existingTask = mergedTasksMap[task.text];
+        if(existingTask) {
+          existingTask.mandays += task.mandays;
+        } else {
+          mergedTasksMap[task.text] = {...task};
+        }
+      })
+      const mergedTasks: Task[] = Object.values(mergedTasksMap);
+      const exportItem: ProjectExport = {
+        project: item.project,
+        tasks: mergedTasks,
+      }
+      exportArray.push(exportItem);
+    })
+    return exportArray;
   }
 
   function makeString(project: ProjectExport) {

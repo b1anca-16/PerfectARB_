@@ -4,7 +4,7 @@ interface Task {
     date: Date,
     text: string,
     project: Project,
-    mandays: Number
+    mandays: number
 }
 
 export function setStorageTask(tasks: Task[]) {

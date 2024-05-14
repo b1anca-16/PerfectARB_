@@ -70,7 +70,7 @@ export class StartElement extends TailwindElement(style) {
     this.modal.close();
     const newTask : Task = {
       id: crypto.randomUUID(),
-      text: this.inputTask.value,
+      text: this.inputTask.value.trim(),
       date: this.clickedDate,
       project: project,
       mandays: Number(this.inputMandays.value)
