@@ -110,12 +110,14 @@ export class StartElement extends TailwindElement(style) {
   
   render() {
     return html`
-      <div class="flex flex-row">
-      <calendar-element class="w-3/4"  @clickedDate=${this.handleClickDate} @addTask=${this.openAddModal}></calendar-element>
-      <projects-element class="ml-3 mt-20 mr-10" @newProjectList=${this.updateProjectList}></projects-element>
+    <div class="mx-20 my-16">
+      <div class="flex flex-row justify-between w-full">
+      <calendar-element class="w-full"  @clickedDate=${this.handleClickDate} @addTask=${this.openAddModal}></calendar-element>
+      <projects-element class="ml-3 mt-20" @newProjectList=${this.updateProjectList}></projects-element>
       </div>
       <display-element day=${this.clickedDate} .tasks=${this.tasksToShow} @newTasksList=${this.updateTaskList}></display-element>
-      <button class="hover:bg-blue-700 bg-blue-900 text-white font-bold py-2 px-4 rounded inline-flex items-center" @click=${this.downloadFile}>ARB exportieren</button>
+      <button class="hover:bg-blue-700 bg-blue-900 text-white text-base py-2 px-4 rounded-md inline-flex items-center mt-5" @click=${this.downloadFile}>ARB exportieren</button>
+    </div>
       
       <dialog id="modal" class="modal">
         <div class="modal-box">
@@ -132,8 +134,8 @@ export class StartElement extends TailwindElement(style) {
         <input style="border-width: 3px;" class="border-blue-700 rounded-md p-1" type="number" id="mandays" name="mandays"min="0.5" max="8" step="0.5">
         <form method="dialog" class="modal-backdrop">
         <div class="flex flex-row justify-between mt-4">
-          <button @click=${this.addNewTask} class="w-28 bg-red-800 text-white rounded-md p-1 bg-blue-700">Hinzufügen</button>
-          <button @click=${this.closeAddModal} class="w-28 bg-red-800 text-white rounded-md p-1 bg-blue-700">Abbrechen</button>
+          <button @click=${this.addNewTask} class="w-28 text-white rounded-md p-1 bg-blue-900">Hinzufügen</button>
+          <button @click=${this.closeAddModal} class="w-28 text-white rounded-md p-1 bg-blue-900">Abbrechen</button>
           </div>
         </form>
         </div>

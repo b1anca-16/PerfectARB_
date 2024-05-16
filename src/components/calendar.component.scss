@@ -55,7 +55,8 @@ h1 {
 }
 
 .kalender {
-  @apply w-11/12 border-2 border-slate-300 bg-neutral-100 grid grid-cols-7 lg:w-11/12 xl:w-11/12 max-w-7xl;
+  @apply w-full  border-2 border-slate-300 bg-neutral-100 grid grid-cols-7 ;
+  margin-right: 6px;
   height: 80%;
   display: grid;
   grid-template-rows: 32px auto;
@@ -73,6 +74,12 @@ h1 {
   line-height: 28px;
   font-weight: 600;
   text-align: center;
+  background-color: #2A3778;
+  border-radius: 20%;
+  color: white;
+  padding-bottom: 5px;
+  padding-left: 7px;
+  padding-right: 7px;
 }
 
 .heute {

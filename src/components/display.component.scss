@@ -1,8 +1,7 @@
 #display-box {
-    width: 92%; 
+    width: 100%; 
     padding: 20px;
-    margin-left: 30px;
-    margin-right: 40px;
+    
     box-sizing: border-box;
     height: 1000px; 
     border: 1px solid #ccc;
@@ -28,6 +27,16 @@ h3{
     display: inline-block;
     margin-right: 6px;
 
+  }
+
+  .text {
+    font-size: 16px;
+  }
+
+  .header {
+    font-size: 27px;
+    font-weight: 400;
+    margin-bottom: 10px;
   }
 
 #removeBtn:hover {

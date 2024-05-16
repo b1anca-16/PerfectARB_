@@ -12,7 +12,13 @@ export class ProjectsElement extends TailwindElement(style) {
     @state() tasks: Task [] = getStorageTasks();
     @query ('#todo-input') inputProject: HTMLInputElement;
     @query ('#project-list') projectList: HTMLInputElement;
-    @state() colors: string[] = ["#1abc9c", "#3498db", "#e74c3c", "#9b59b6", "#f1c40f", "#e67e22", "#2ecc71", "#34495e", "#16a085", "#2980b9", "#c0392b", "#8e44ad", "#f39c12", "#d35400", "#27ae60", "#2c3e50", "#95a5a6", "#7f8c8d", "#ecf0f1", "#d1d8e0"];
+    @state() colors: string[] = [
+      "#005f73", "#0a9396", "#e9d8a6", "#ca6702", "#9b2226",
+      "#ff6f61", "#6a0572", "#ffcc00", "#006d77", "#f4a261",
+      "#264653", "#2a9d8f", "#e76f51", "#8338ec", "#3a86ff",
+      "#ffbe0b", "#9e0059", "#06d6a0", "#ef476f", "#118ab2"
+    ]
+    ;
 
   constructor() {
     super(); 
@@ -98,7 +104,7 @@ export class ProjectsElement extends TailwindElement(style) {
         </ul>
         <div id="projectInput">
           <input type="text" id="todo-input" maxlength="45"/>
-          <button id="add-todo" @click="${this.addTodo}">Projekt hinzufügen</button>
+          <button id="add-todo" class="hover:bg-blue-700 bg-blue-900 text-white text-base py-2 px-4 rounded-md inline-flex items-center mt-5" @click="${this.addTodo}">Projekt hinzufügen</button>
         </div>
         </div>
       </div>

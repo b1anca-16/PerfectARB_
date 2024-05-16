@@ -1,5 +1,7 @@
 h3 {
-  font-size: 20px;
+  font-size: 27px;
+  margin-bottom: 10px;
+  font-weight: normal;
 }
 
 .display-box {
@@ -8,7 +10,7 @@ h3 {
   padding-bottom: 20px;
   padding-left: 20px; 
   width: 500px;
-  font-family: 'Roboto', sans-serif;
+  font-family: Arial, sans-serif; 
   margin-top: 100px;
 
 }
@@ -23,6 +25,7 @@ li {
   align-items: center;
   margin-bottom: 5px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .remove-button {
@@ -35,18 +38,6 @@ li {
   border: solid;
   border-color: #C8C8C8;
   border-width: 2px;
-}
-
-#add-todo {
-  width: 150px;
-  height: 36px;
-  font-family: "Roboto", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  background-color: #2A3778;
-  color: white;
-  border-radius: 10px;
-  border: none;
 }
 
 #add-todo:hover {
@@ -64,7 +55,7 @@ li {
 }
 
 #display-box-projects {
-  width: 93%; 
+  width: 100%; 
   padding: 20px;
   box-sizing: border-box;
   border: 1px solid #ccc; 
@@ -73,11 +64,10 @@ li {
   font-size: 14px; 
   color: #333; 
   background-color: rgb(245 245 245); 
-  position: relative;
+  
   max-height: min-content;
   border-radius: 5px;
-  margin-top: 15px;
-  margin-left: -20px;
+  
   height: 594px;
   margin-bottom: 20px;
 }

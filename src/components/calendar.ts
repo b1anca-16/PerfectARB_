@@ -70,15 +70,15 @@ render() {
       <div class="w-full flex">
         <div class="w-1/2 flex justify-end items-center">
           <button class=heute @click=${this.backToday} >Heute</button>
-          <button class="arrow" @click=${this.lastMonth}>◀︎</button>
-          <button class="arrow" @click=${this.nextMonth}>▶︎</button>
+          <button class="arrow" @click=${this.lastMonth}><</button>
+          <button class="arrow" @click=${this.nextMonth}>></button>
         </div>
         <div class="w-1/2 flex justify-start items-center">
           <h2 class="mx-8 text-lg mb-5">${this.dateStr}</h2>
         </div>
       </div>
     </div>
-    <div class="h-full flex justify-center mt-8">
+    <div class="h-full flex mt-4">
       <div class="kalender">
         ${this.weekDays.map((item) => html`<div class="weekdays">${item}</div>`)}
         ${this.getDaysInMonth().map((currentDate, index) => {

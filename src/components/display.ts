@@ -52,15 +52,14 @@ export class DisplayElement extends TailwindElement(style) {
   render() {
     return html `
     <div id="display-box">
-    <h3>Tätigkeits-Übersicht</h3>
-    <p id="test">${this.makeDayString()}</p>
+    <h3 class="header">Tätigkeits-Übersicht für den ${this.makeDayString()}</h3>
 
     ${this.tasks?.map((task) => {
       return html`
       <p> 
       <span class="dot" style="background-color: ${task.project.color}"></span>
-      <span>${task.mandays} Stunden:</span>
-      <span>${task.text}</span> <span id="removeBtn" @click="${() => this.removeTask(task.id)}">✖️</span>
+      <span class="text">${task.mandays} Stunden:</span>
+      <span class="text">${task.text}</span> <span id="removeBtn" @click="${() => this.removeTask(task.id)}">✖️</span>
       `
     })}
   </div>`
