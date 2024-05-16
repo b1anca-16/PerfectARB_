@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain, dialog, Notification } from 'electron';
 import path from 'path';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -47,6 +47,27 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
+});
+
+// IPC-Handler für Dialog-APIs
+ipcMain.handle('show-open-dialog', async (event, options) => {
+  const result = await dialog.showOpenDialog(options);
+  return result;
+});
+
+ipcMain.handle('show-save-dialog', async (event, options) => {
+  const result = await dialog.showSaveDialog(options);
+  return result;
+});
+
+ipcMain.handle('show-message-box', async (event, options) => {
+  const result = await dialog.showMessageBox(options);
+  return result;
+});
+
+// IPC-Handler für Benachrichtigungen
+ipcMain.on('show-notification', (event, { title, body }) => {
+  new Notification({ title, body }).show();
 });
 
 // In this file you can include the rest of your app's specific main process

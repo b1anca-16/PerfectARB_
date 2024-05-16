@@ -24,7 +24,7 @@ export let projectsString: String = "";
     exportArr = [];
     projects.map(project => {
         const matchingTasks: Task[] = tasks.filter(task => {
-            return task.project.text == project.text;
+            return task.project.color == project.color;
         })
         
         matchingTasks.sort(function(a, b){return a.date.getTime() - b.date.getTime()});

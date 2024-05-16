@@ -98,7 +98,7 @@ render() {
                     const taskDate = new Date(item.date);
                     return (this.normalizeDate(currentDate)  === this.normalizeDate(taskDate));
                   }).map((task) => {
-                    return html `<span class="dot" style="background-color: #${task.project.color}"></span>`
+                    return html `<span class="dot" style="background-color: ${task.project.color}"></span>`
                   })}
                 </div>
               </div>`;

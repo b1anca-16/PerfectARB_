@@ -58,7 +58,7 @@ export class DisplayElement extends TailwindElement(style) {
     ${this.tasks?.map((task) => {
       return html`
       <p> 
-      <span class="dot" style="background-color: #${task.project.color}"></span>
+      <span class="dot" style="background-color: ${task.project.color}"></span>
       <span>${task.mandays} Stunden:</span>
       <span>${task.text}</span> <span id="removeBtn" @click="${() => this.removeTask(task.id)}">✖️</span>
       `

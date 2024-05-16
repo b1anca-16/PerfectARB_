@@ -82,7 +82,6 @@ export class StartElement extends TailwindElement(style) {
   }
 
   updateProjectList(e: CustomEvent) {
-    console.log("Project updated");
     const projectList = e.detail.list;
     this.projects = projectList;
     setStorageProjects(this.projects);
